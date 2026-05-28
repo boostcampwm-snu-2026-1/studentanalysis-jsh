@@ -1,5 +1,6 @@
 # checklist
 
+## 1주차 - 기본 세팅
 - [ ] feature/1: 프로젝트 초기 세팅
   - [ ] CLAUDE.md 작성 (아키텍처 원칙, 디렉토리 구조, 컨벤션)
   - [ ] 모노레포 구조 세팅 (client / server 디렉토리 분리)
@@ -8,6 +9,10 @@
   - [ ] MongoDB Atlas 연결 및 환경변수 설정 (.env, .gitignore)
   - [ ] Express 기본 미들웨어 설정 (cors, json, error handler)
   - [ ] 레이어드 아키텍처 디렉토리 구조 세팅 (routes / services / repositories / models)
+
+---
+
+## 2주차 — 백엔드
 
 - [ ] feature/2: Student 모델 및 기본 CRUD API
   - [ ] Student Mongoose 스키마 정의 (name, grade, classNum, number, targetUniv, targetMajor)
@@ -54,6 +59,10 @@
   - [ ] `GET /api/students/:id/consultations` 상담 이력 목록
   - [ ] `POST /api/consultations` 상담 기록 생성 (analysisId 선택)
   - [ ] `PUT /api/consultations/:id` 상담 기록 수정
+
+---
+
+## 3주차 — 프론트엔드 + 배포
 
 - [ ] feature/7: 공통 UI 세팅 및 라우팅
   - [ ] React Router v6 라우팅 구성 (/, /students, /students/new, /students/:id)
