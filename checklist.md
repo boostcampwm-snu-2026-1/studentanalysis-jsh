@@ -1,14 +1,15 @@
 # checklist
 
 ## 1주차 - 기본 세팅
-- [ ] feature/1: 프로젝트 초기 세팅
-  - [ ] CLAUDE.md 작성 (아키텍처 원칙, 디렉토리 구조, 컨벤션)
-  - [ ] 모노레포 구조 세팅 (client / server 디렉토리 분리)
-  - [ ] Vite + React 프론트엔드 초기화
-  - [ ] Node.js + Express 백엔드 초기화
-  - [ ] MongoDB Atlas 연결 및 환경변수 설정 (.env, .gitignore)
-  - [ ] Express 기본 미들웨어 설정 (cors, json, error handler)
-  - [ ] 레이어드 아키텍처 디렉토리 구조 세팅 (routes / services / repositories / models)
+- [x] feature/1: 프로젝트 초기 세팅
+  - [x] CLAUDE.md 작성 (아키텍처 원칙, 디렉토리 구조, 컨벤션)
+  - [x] 모노레포 구조 세팅 (client / server 디렉토리 분리) (npm, workspace 없이 폴더만 분리)
+  - [x] Vite + React 프론트엔드 초기화
+  - [x] Node.js + Express 백엔드 초기화
+  - [x] npm install (client, server)
+  - [x] MongoDB Atlas 연결 및 환경변수 설정 (.env, .gitignore) (mongoose, server=dotenv / client=Vite 내장)
+  - [x] Express 기본 미들웨어 설정 (cors, json, error handler)
+  - [x] 레이어드 아키텍처 디렉토리 구조 세팅 (routes / services / repositories / models)
 
 ---
 
