@@ -9,7 +9,7 @@
   - [x] npm install (client, server)
   - [x] MongoDB Atlas 연결 및 환경변수 설정 (.env, .gitignore) (mongoose, server=dotenv / client=Vite 내장)
   - [x] Express 기본 미들웨어 설정 (cors, json, error handler)
-  - [ ] 레이어드 아키텍처 디렉토리 구조 세팅 (routes / services / repositories / models)
+  - [x] 레이어드 아키텍처 디렉토리 구조 세팅 (routes / services / repositories / models)
 
 ---
 
