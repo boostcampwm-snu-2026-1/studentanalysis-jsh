@@ -7,7 +7,7 @@
   - [x] Vite + React 프론트엔드 초기화
   - [x] Node.js + Express 백엔드 초기화
   - [x] npm install (client, server)
-  - [ ] MongoDB Atlas 연결 및 환경변수 설정 (.env, .gitignore) (mongoose, server=dotenv / client=Vite 내장)
+  - [x] MongoDB Atlas 연결 및 환경변수 설정 (.env, .gitignore) (mongoose, server=dotenv / client=Vite 내장)
   - [ ] Express 기본 미들웨어 설정 (cors, json, error handler)
   - [ ] 레이어드 아키텍처 디렉토리 구조 세팅 (routes / services / repositories / models)
 

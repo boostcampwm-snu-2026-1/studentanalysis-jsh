@@ -47,6 +47,10 @@ studentanalysis-jsh/
 - client: Vite 내장. `VITE_` 접두사 변수만 브라우저에 노출됨. `VITE_API_BASE_URL`
 - **API 키는 절대 client `.env`에 넣지 않는다**
 
+### DNS 우회 설정
+- `server/src/db.js` 상단의 `dns.setServers(['8.8.8.8', '8.8.4.4'])` 는 삭제하지 않는다
+- ISP DNS가 MongoDB SRV 쿼리를 차단하기 때문에 Google DNS로 우회하는 코드임. 없으면 연결 안 됨
+
 ### 패키지 관리
 - npm 사용. workspace 없이 client/server 각각 독립 `package.json`
 - client, server 각 디렉토리에서 별도로 `npm install`
