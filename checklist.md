@@ -1,7 +1,7 @@
 # checklist
 
 ## 1주차 - 기본 세팅
-- [ ] feature/1: 프로젝트 초기 세팅
+- [x] feature/1: 프로젝트 초기 세팅
   - [x] CLAUDE.md 작성 (아키텍처 원칙, 디렉토리 구조, 컨벤션)
   - [x] 모노레포 구조 세팅 (client / server 디렉토리 분리) (npm, workspace 없이 폴더만 분리)
   - [x] Vite + React 프론트엔드 초기화
