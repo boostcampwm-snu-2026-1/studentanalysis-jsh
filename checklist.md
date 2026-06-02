@@ -16,10 +16,10 @@
 ## 2주차 — 백엔드
 
 - [ ] feature/2: Student 모델 및 기본 CRUD API
-  - [ ] Student Mongoose 스키마 정의 (name, grade, classNum, number, targetUniv, targetMajor)
-  - [ ] studentId 자동 생성 로직 (학년+반+번호 각 2자리 조합)
-  - [ ] StudentRepository 구현 (findAll, findById, create, update, delete)
-  - [ ] StudentService 구현 (필터링, 유효성 검사)
+  - [x] Student Mongoose 스키마 정의 (name, grade, classNum, number, targetUniv, targetMajor)
+  - [x] StudentRepository 구현 (findAll, findById, create, update, delete)
+  - [x] StudentService 구현 (필터링, 유효성 검사)
+    - [x] studentId 자동 생성 로직 (학년+반+번호 각 2자리 조합)
   - [ ] `POST /api/students` 학생 등록
   - [ ] `GET /api/students` 학생 목록 (grade, classNum 쿼리 필터)
   - [ ] `GET /api/students/:id` 학생 상세 조회
