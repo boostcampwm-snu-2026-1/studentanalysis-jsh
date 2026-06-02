@@ -71,4 +71,17 @@ const upsertGrades = async (studentId, { year, semester, subjects }) => {
   return getById(studentId)
 }
 
-module.exports = { getAll, getById, create, update, remove, upsertGrades }
+const upsertMockExam = async (studentId, { year, month, kor, math, eng, exp1, exp2 }) => {
+  if (year == null || month == null)
+    throw { status: 400, message: '필수 항목이 누락되었어요 (year, month)' }
+  const student = await repo.findById(studentId)
+  if (!student) throw { status: 404, message: '학생을 찾을 수 없어요' }
+  const idx = student.mockExams.findIndex((e) => e.year === year && e.month === month)
+  const exam = { year, month, kor: kor || {}, math: math || {}, eng: eng || {}, exp1: exp1 || {}, exp2: exp2 || {} }
+  if (idx >= 0) student.mockExams[idx] = exam
+  else student.mockExams.push(exam)
+  await student.save()
+  return getById(studentId)
+}
+
+module.exports = { getAll, getById, create, update, remove, upsertGrades, upsertMockExam }

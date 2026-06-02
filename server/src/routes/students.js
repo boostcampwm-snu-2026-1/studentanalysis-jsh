@@ -48,6 +48,15 @@ router.put('/:studentId/grades', async (req, res, next) => {
   }
 })
 
+router.put('/:studentId/mock-exams', async (req, res, next) => {
+  try {
+    const student = await service.upsertMockExam(req.params.studentId, req.body)
+    res.json({ data: student })
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.delete('/:studentId', async (req, res, next) => {
   try {
     await service.remove(req.params.studentId)
