@@ -13,8 +13,8 @@ depends_on: [design, implement, review, confirm, commit, push]
 
 | 스킬 | 역할 |
 |------|------|
-| `design` | feature 항목 선택 + 하위 항목 확인 + 구현 방법 합의 + 브랜치 생성 안내 |
-| `implement` | 하위 항목 하나를 코드로 구현 |
+| `design` | 하위 항목 하나 선택 + 구현 방법 합의 (신규 feature면 브랜치 생성 안내 포함) |
+| `implement` | 합의한 방식으로 하위 항목 하나를 코드로 구현 |
 | `review` | 구현 코드 설명 + 피드백 수집 |
 | `confirm` | 피드백 반영 후 수정 |
 | `commit` | 변경사항 요약 + 하위 항목 체크 + 커밋 안내 + 다음 단계 분기 |
@@ -26,21 +26,21 @@ depends_on: [design, implement, review, confirm, commit, push]
 /workflow 입력
     │
     ▼
-[design 스킬 발동]
-    │ 설계 요약 + 브랜치 생성 완료
-    ▼
-[implement 스킬 발동]  ◀─────────────────────┐
-    │ 하위 항목 하나 구현 완료                  │
-    ▼                                          │
-[review 스킬 발동]                             │
-    │                                          │
-    ├─ 피드백 있음 → [confirm 스킬 발동] ──────┤(review 재발동)
-    │                                          │
-    └─ 만족                                    │
-         ↓                                    │
-    [commit 스킬 발동]                         │
-         │                                    │
-         ├─ 미완료 하위 항목 있음 ─────────────┘
+[design 스킬 발동]  ◀─────────────────────┐
+    │ 하위 항목 하나 설계 완료               │
+    ▼                                       │
+[implement 스킬 발동]                       │
+    │ 하위 항목 하나 구현 완료               │
+    ▼                                       │
+[review 스킬 발동]                          │
+    │                                       │
+    ├─ 피드백 있음 → [confirm 스킬 발동] ───┤(review 재발동)
+    │                                       │
+    └─ 만족                                 │
+         ↓                                 │
+    [commit 스킬 발동]                      │
+         │                                 │
+         ├─ 미완료 하위 항목 있음 ──────────┘
          │
          └─ 모든 하위 항목 완료
                   ↓
