@@ -22,7 +22,7 @@
     - [x] studentId 자동 생성 로직 (학년+반+번호 각 2자리 조합)
   - [x] Student CRUD API 라우터 구현 (POST, GET, PUT, DELETE)
 
-- [ ] feature/3: 내신 · 모의고사 데이터 API
+- [x] feature/3: 내신 · 모의고사 데이터 API
   - [x] grades 서브도큐먼트 스키마 정의 (semester, subjects[], avgGrade) - 내신
   - [x] mockExams 서브도큐먼트 스키마 정의 (date, kor/math/eng/exp 각 grade+percentile) - 모의고사
   - [x] 학기별 평균 등급 자동 계산 로직 (Service)
