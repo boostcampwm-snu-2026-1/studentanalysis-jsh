@@ -1,6 +1,6 @@
 ---
 name: commit
-description: 커밋 준비 단계를 진행합니다. 하위 항목 하나의 변경사항을 요약하고 커밋을 안내한 뒤, 남은 하위 항목이 있으면 implement로, 없으면 push로 넘어갑니다. /workflow에서 자동 호출됩니다.
+description: 커밋 준비 단계를 진행합니다. 하위 항목 하나의 변경사항을 요약하고 커밋을 안내한 뒤, 남은 하위 항목이 있으면 design으로, 없으면 push로 넘어갑니다. /workflow에서 자동 호출됩니다.
 depends_on: [review]
 ---
 
@@ -58,5 +58,5 @@ depends_on: [review]
 ### 5. 다음 단계 분기
 커밋 완료 후 checklist.md에서 현재 feature의 미완료 하위 항목을 확인한다.
 
-- **미완료 하위 항목이 있다** → "다음 하위 항목: [항목명] 을 구현할게요." 라고 안내하고 workflow가 `implement` 스킬을 발동한다
+- **미완료 하위 항목이 있다** → "다음 하위 항목: [항목명] 을 설계할게요." 라고 안내하고 workflow가 `design` 스킬을 발동한다
 - **모든 하위 항목이 완료됐다** → workflow가 `push` 스킬을 발동한다

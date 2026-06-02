@@ -25,7 +25,7 @@
 - [ ] feature/3: 내신 · 모의고사 데이터 API
   - [x] grades 서브도큐먼트 스키마 정의 (semester, subjects[], avgGrade) - 내신
   - [x] mockExams 서브도큐먼트 스키마 정의 (date, kor/math/eng/exp 각 grade+percentile) - 모의고사
-  - [ ] 학기별 평균 등급 자동 계산 로직 (Service)
+  - [x] 학기별 평균 등급 자동 계산 로직 (Service)
   - [ ] `PUT /api/students/:id/grades` 내신 저장·수정
   - [ ] `PUT /api/students/:id/mock-exams` 모의고사 저장·수정
 

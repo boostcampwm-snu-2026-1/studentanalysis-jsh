@@ -23,10 +23,18 @@ const getAll = async ({ grade, classNum } = {}) => {
   return repo.findAll(filter)
 }
 
+const calcAvgGrade = (subjects) => {
+  if (!subjects || subjects.length === 0) return null
+  const sum = subjects.reduce((acc, s) => acc + s.grade, 0)
+  return Math.round((sum / subjects.length) * 10) / 10
+}
+
 const getById = async (studentId) => {
   const student = await repo.findById(studentId)
   if (!student) throw { status: 404, message: '학생을 찾을 수 없어요' }
-  return student
+  const obj = student.toObject()
+  obj.grades = obj.grades.map((g) => ({ ...g, avgGrade: calcAvgGrade(g.subjects) }))
+  return obj
 }
 
 const create = async (body) => {
