@@ -78,6 +78,7 @@ studentanalysis-jsh/
 ### 금지 패턴 (server)
 - Service에서 에러를 던질 때 반드시 `throw { status, message }` 형태로 던진다. errorHandler가 `err.status`, `err.message`를 읽기 때문에, 다른 형태로 던지면 500 에러가 발생한다
 - `findOneAndUpdate` 호출 시 반드시 `{ new: true, runValidators: true }` 옵션을 명시한다. 빠뜨리면 수정 전 문서가 반환되고 스키마 유효성 검사가 실행되지 않는다
+- 배열 안에 embed되는 서브도큐먼트 스키마는 반드시 `{ _id: false }` 옵션을 붙인다. 빠뜨리면 배열 요소마다 불필요한 `_id`가 자동 생성된다
 
 ### 브랜치 전략
 - `main`: 배포 브랜치
