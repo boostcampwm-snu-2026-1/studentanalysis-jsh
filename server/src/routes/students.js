@@ -39,6 +39,15 @@ router.put('/:studentId', async (req, res, next) => {
   }
 })
 
+router.put('/:studentId/grades', async (req, res, next) => {
+  try {
+    const student = await service.upsertGrades(req.params.studentId, req.body)
+    res.json({ data: student })
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.delete('/:studentId', async (req, res, next) => {
   try {
     await service.remove(req.params.studentId)

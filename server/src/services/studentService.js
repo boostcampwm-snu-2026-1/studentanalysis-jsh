@@ -59,4 +59,16 @@ const remove = async (studentId) => {
   if (!student) throw { status: 404, message: '학생을 찾을 수 없어요' }
 }
 
-module.exports = { getAll, getById, create, update, remove }
+const upsertGrades = async (studentId, { year, semester, subjects }) => {
+  if (year == null || semester == null)
+    throw { status: 400, message: '필수 항목이 누락되었어요 (year, semester)' }
+  const student = await repo.findById(studentId)
+  if (!student) throw { status: 404, message: '학생을 찾을 수 없어요' }
+  const idx = student.grades.findIndex((g) => g.year === year && g.semester === semester)
+  if (idx >= 0) student.grades[idx] = { year, semester, subjects: subjects || [] }
+  else student.grades.push({ year, semester, subjects: subjects || [] })
+  await student.save()
+  return getById(studentId)
+}
+
+module.exports = { getAll, getById, create, update, remove, upsertGrades }
