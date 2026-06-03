@@ -33,7 +33,7 @@
   - [x] Analysis Mongoose 스키마 정의 (studentId, inputText 스냅샷, result{competencyProfile, diagnosis, activityA, activityB, narrative}, createdAt)
   - [x] AnalysisRepository 구현 (create, findByStudentId, findById)
   - [x] OpenAI 클라이언트 설정 (환경변수 OPENAI_API_KEY, OPENAI_MODEL)
-  - [ ] 프롬프트 템플릿 파일 분리 (prompts/{competencyProfile,diagnosis,activityA,activityB,narrative}.js)
+  - [x] 프롬프트 템플릿 파일 분리 (prompts/{competencyProfile,diagnosis,activityA,activityB,narrative}.js)
   - [ ] 내신·모의고사 데이터 프롬프트 주입 유틸 함수
 
 - [ ] feature/5: AI 5단계 분석 API
