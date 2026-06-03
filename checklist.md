@@ -34,7 +34,7 @@
   - [x] AnalysisRepository 구현 (create, findByStudentId, findById)
   - [x] OpenAI 클라이언트 설정 (환경변수 OPENAI_API_KEY, OPENAI_MODEL)
   - [x] 프롬프트 템플릿 파일 분리 (prompts/{competencyProfile,diagnosis,activityA,activityB,narrative}.js)
-  - [ ] 내신·모의고사 데이터 프롬프트 주입 유틸 함수
+  - [x] 내신·모의고사 데이터 프롬프트 주입 유틸 함수
 
 - [ ] feature/5: AI 5단계 분석 API
   - [ ] competencyProfile 호출 및 JSON 파싱 (careerFitScore, continuityScore 등)
