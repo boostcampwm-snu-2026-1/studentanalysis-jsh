@@ -80,6 +80,11 @@ studentanalysis-jsh/
 - `findOneAndUpdate` 호출 시 반드시 `{ new: true, runValidators: true }` 옵션을 명시한다. 빠뜨리면 수정 전 문서가 반환되고 스키마 유효성 검사가 실행되지 않는다
 - 배열 안에 embed되는 서브도큐먼트 스키마는 반드시 `{ _id: false }` 옵션을 붙인다. 빠뜨리면 배열 요소마다 불필요한 `_id`가 자동 생성된다
 
+### Analysis result 필드명
+- Analysis 스키마의 `result` 필드는 `stage1~5` 대신 목적별 이름 사용
+- `competencyProfile` / `diagnosis` / `activityA` / `activityB` / `narrative`
+- 5개 항목은 Promise.all 병렬 호출이므로 "단계"라는 표현 대신 "항목"으로 통일
+
 ### 브랜치 전략
 - `main`: 배포 브랜치
 - `dev`: 통합 브랜치
