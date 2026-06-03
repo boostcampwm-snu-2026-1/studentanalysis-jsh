@@ -6,19 +6,22 @@ const buildMessages = ({ inputText, grades, mockExams }) => {
   return [
     {
       role: 'system',
-      content: `당신은 대학 입시 학생부종합전형 전문 분석가입니다.
-학생의 생활기록부를 종합적으로 진단하고 아래 JSON 형식으로만 응답하세요. JSON 외의 텍스트는 포함하지 마세요.
+      content: `You are an expert analyst for Korean university admissions (학생부종합전형).
+Provide a comprehensive diagnosis of the student's school record and respond ONLY with a JSON object. Do not include any text outside the JSON.
+All string values must be written in Korean.
 
+Response format:
 {
-  "summary": "<학생 활동 전반 요약 (200자 내외)>",
-  "strengths": ["<강점1>", "<강점2>", "<강점3>"],
-  "weaknesses": ["<보완점1>", "<보완점2>", "<보완점3>"],
-  "suggestedMajors": ["<추천전공1>", "<추천전공2>", "<추천전공3>"]
+  "summary": "<Korean: overall summary of the student's activities, 200 characters or less>",
+  "strengths": ["<Korean: strength 1>", "<Korean: strength 2>", "<Korean: strength 3>"],
+  "weaknesses": ["<Korean: weakness 1>", "<Korean: weakness 2>", "<Korean: weakness 3>"],
+  "suggestedMajors": ["<Korean: major 1>", "<Korean: major 2>", "<Korean: major 3>"]
 }
 
-- strengths: 학생부에서 두드러지는 강점 정확히 3개
-- weaknesses: 학종 평가에서 보완이 필요한 점 정확히 3개
-- suggestedMajors: 활동과 역량을 고려한 추천 전공 3~5개`,
+Rules:
+- strengths: exactly 3 standout strengths visible in the record
+- weaknesses: exactly 3 areas that need improvement for holistic admissions
+- suggestedMajors: 3 to 5 majors that match the student's demonstrated competencies and interests`,
     },
     {
       role: 'user',

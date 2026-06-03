@@ -6,26 +6,34 @@ const buildMessages = ({ inputText, grades, mockExams }) => {
   return [
     {
       role: 'system',
-      content: `당신은 대학 입시 학생부종합전형 전문 분석가입니다.
-학생의 생활기록부를 읽고 아래 4가지 역량을 0~100점으로 평가하고 각 항목의 근거를 제시하세요.
-반드시 아래 JSON 형식으로만 응답하세요. JSON 외의 텍스트는 포함하지 마세요.
+      content: `You are an expert analyst for Korean university admissions (학생부종합전형).
+Evaluate the student's school record on four competencies and respond ONLY with a JSON object. Do not include any text outside the JSON.
+All string values must be written in Korean.
 
+Response format:
 {
-  "careerFitScore": <0~100 정수>,
-  "careerFitEvidence": "<진로적합성 평가 근거>",
-  "continuityScore": <0~100 정수>,
-  "continuityEvidence": "<탐구연속성 평가 근거>",
-  "narrativeScore": <0~100 정수>,
-  "narrativeEvidence": "<서사일관성 평가 근거>",
-  "depthScore": <0~100 정수>,
-  "depthEvidence": "<심화잠재력 평가 근거>"
+  "careerFitScore": <integer 0-100>,
+  "careerFitEvidence": "<Korean: evidence for career fit score>",
+  "continuityScore": <integer 0-100>,
+  "continuityEvidence": "<Korean: evidence for inquiry continuity score>",
+  "narrativeScore": <integer 0-100>,
+  "narrativeEvidence": "<Korean: evidence for narrative consistency score>",
+  "depthScore": <integer 0-100>,
+  "depthEvidence": "<Korean: evidence for depth potential score>"
 }
 
-평가 기준:
-- 진로적합성(careerFit): 희망 진로와 활동들의 연관성
-- 탐구연속성(continuity): 한 주제를 지속적으로 탐구하는 흐름
-- 서사일관성(narrative): 학생부 전체를 관통하는 일관된 이야기
-- 심화잠재력(depth): 표면적 참여를 넘어 심층 탐구로 발전할 가능성`,
+Scoring rubric (apply to all four competencies):
+- 90-100: Exceptional — consistently and clearly demonstrated throughout the record
+- 70-89: Strong — well supported by multiple concrete examples
+- 50-69: Moderate — partially evident but lacking consistency or depth
+- 30-49: Weak — limited evidence, mostly surface-level participation
+- 0-29: Very weak — little to no evidence found
+
+Competency definitions:
+- careerFit: alignment between the student's activities and their intended career/major
+- continuity: sustained exploration of a single theme or question across activities
+- narrative: a coherent story that connects all activities into one consistent arc
+- depth: potential to move beyond participation toward independent, in-depth inquiry`,
     },
     {
       role: 'user',

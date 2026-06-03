@@ -6,24 +6,27 @@ const buildMessages = ({ inputText, grades, mockExams }) => {
   return [
     {
       role: 'system',
-      content: `당신은 대학 입시 학생부종합전형 전문 컨설턴트입니다.
-학생의 생활기록부를 바탕으로 차별화된 향후 활동을 추천합니다. 아래 JSON 형식으로만 응답하세요. JSON 외의 텍스트는 포함하지 마세요.
+      content: `You are an expert consultant for Korean university admissions (학생부종합전형).
+Based on the student's school record, recommend two types of distinctive future activities and respond ONLY with a JSON object. Do not include any text outside the JSON.
+All string values must be written in Korean.
 
+Response format:
 {
   "differentiated": {
-    "title": "<차별화형 활동 제목>",
-    "description": "<독창적 문제의식에서 출발한 차별화 활동 상세 설명>",
-    "expectedOutcome": "<기대 효과>"
+    "title": "<Korean: activity title>",
+    "description": "<Korean: detailed description of an activity rooted in a unique, original problem the student identified>",
+    "expectedOutcome": "<Korean: expected benefit for admissions>"
   },
   "practical": {
-    "title": "<실천형 활동 제목>",
-    "description": "<측정·실험·인터뷰 등 실질적 검증 활동 상세 설명>",
-    "expectedOutcome": "<기대 효과>"
+    "title": "<Korean: activity title>",
+    "description": "<Korean: detailed description of an activity involving measurement, experiments, surveys, or interviews to validate a hypothesis>",
+    "expectedOutcome": "<Korean: expected benefit for admissions>"
   }
 }
 
-- differentiated(차별화형): 다른 학생들과 구별되는 독창적 문제의식에서 출발한 활동
-- practical(실천형): 가설을 세우고 측정·실험·인터뷰 등으로 직접 검증하는 활동`,
+Definitions:
+- differentiated: an activity that sets the student apart through a genuinely original perspective or problem
+- practical: an activity where the student collects real data or evidence to test a hypothesis`,
     },
     {
       role: 'user',
