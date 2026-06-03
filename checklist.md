@@ -29,22 +29,22 @@
   - [x] `PUT /api/students/:id/grades` 내신 저장·수정
   - [x] `PUT /api/students/:id/mock-exams` 모의고사 저장·수정
 
-- [ ] feature/4: Analysis 모델 및 OpenAI 연동 기반
-  - [ ] Analysis Mongoose 스키마 정의 (studentId, inputText 스냅샷, result{stage1~5}, createdAt)
-  - [ ] AnalysisRepository 구현 (create, findByStudentId, findById)
-  - [ ] OpenAI 클라이언트 설정 (환경변수 OPENAI_API_KEY, OPENAI_MODEL)
-  - [ ] 프롬프트 템플릿 파일 분리 (prompts/stage1~5.js)
-  - [ ] 내신·모의고사 데이터 프롬프트 주입 유틸 함수
+- [x] feature/4: Analysis 모델 및 OpenAI 연동 기반
+  - [x] Analysis Mongoose 스키마 정의 (studentId, inputText 스냅샷, result{competencyProfile, diagnosis, activityA, activityB, narrative}, createdAt)
+  - [x] AnalysisRepository 구현 (create, findByStudentId, findById)
+  - [x] OpenAI 클라이언트 설정 (환경변수 OPENAI_API_KEY, OPENAI_MODEL)
+  - [x] 프롬프트 템플릿 파일 분리 (prompts/{competencyProfile,diagnosis,activityA,activityB,narrative}.js)
+  - [x] 내신·모의고사 데이터 프롬프트 주입 유틸 함수
 
 - [ ] feature/5: AI 5단계 분석 API
-  - [ ] 1단계 역량 프로필 호출 및 JSON 파싱 (careerFitScore, continuityScore 등)
-  - [ ] 2단계 종합 진단 호출 및 JSON 파싱 (summary, strengths, weaknesses, suggestedMajors)
-  - [ ] 3단계 활동 추천 A 호출 및 JSON 파싱 (stable, intensive)
-  - [ ] 4단계 활동 추천 B 호출 및 JSON 파싱 (differentiated, practical)
-  - [ ] 5단계 서사 설계 호출 및 JSON 파싱 (narrative, ideas[6])
-  - [ ] 5단계 Promise.all 병렬 호출 AnalysisService 구현
-  - [ ] 단계별 필수 JSON 키 누락 검증 로직
-  - [ ] 파싱 실패 시 해당 단계 독립 재시도 (최대 1회)
+  - [ ] competencyProfile 호출 및 JSON 파싱 (careerFitScore, continuityScore 등)
+  - [ ] diagnosis 호출 및 JSON 파싱 (summary, strengths, weaknesses, suggestedMajors)
+  - [ ] activityA 호출 및 JSON 파싱 (stable, intensive)
+  - [ ] activityB 호출 및 JSON 파싱 (differentiated, practical)
+  - [ ] narrative 호출 및 JSON 파싱 (narrative, ideas[6])
+  - [ ] Promise.all 병렬 호출 AnalysisService 구현
+  - [ ] 항목별 필수 JSON 키 누락 검증 로직
+  - [ ] 파싱 실패 시 해당 항목 독립 재시도 (최대 1회)
   - [ ] `POST /api/students/:id/analyze` 분석 요청 및 결과 저장
   - [ ] `GET /api/students/:id/analyses` 분석 이력 목록 (최신순)
   - [ ] `GET /api/analyses/:id` 분석 결과 상세 조회
