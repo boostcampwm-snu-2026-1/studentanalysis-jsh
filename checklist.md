@@ -29,7 +29,7 @@
   - [x] `PUT /api/students/:id/grades` 내신 저장·수정
   - [x] `PUT /api/students/:id/mock-exams` 모의고사 저장·수정
 
-- [ ] feature/4: Analysis 모델 및 OpenAI 연동 기반
+- [x] feature/4: Analysis 모델 및 OpenAI 연동 기반
   - [x] Analysis Mongoose 스키마 정의 (studentId, inputText 스냅샷, result{competencyProfile, diagnosis, activityA, activityB, narrative}, createdAt)
   - [x] AnalysisRepository 구현 (create, findByStudentId, findById)
   - [x] OpenAI 클라이언트 설정 (환경변수 OPENAI_API_KEY, OPENAI_MODEL)
