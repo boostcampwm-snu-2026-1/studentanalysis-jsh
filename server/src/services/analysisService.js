@@ -60,6 +60,12 @@ async function getByStudentId(studentId) {
   return analysisRepository.findByStudentId(studentId)
 }
 
+async function getById(id) {
+  const analysis = await analysisRepository.findById(id)
+  if (!analysis) throw { status: 404, message: '분석 결과를 찾을 수 없습니다.' }
+  return analysis
+}
+
 async function runAndSave(studentId, inputText) {
   const student = await studentRepository.findById(studentId)
   if (!student) throw { status: 404, message: '학생을 찾을 수 없습니다.' }
@@ -68,4 +74,4 @@ async function runAndSave(studentId, inputText) {
   return analysisRepository.create({ studentId, inputText, result })
 }
 
-module.exports = { runCompetencyProfile, runDiagnosis, runActivityA, runActivityB, runNarrative, analyze, getByStudentId, runAndSave }
+module.exports = { runCompetencyProfile, runDiagnosis, runActivityA, runActivityB, runNarrative, analyze, getByStudentId, getById, runAndSave }
