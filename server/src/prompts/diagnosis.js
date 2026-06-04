@@ -30,4 +30,6 @@ Rules:
   ]
 }
 
-module.exports = { buildMessages, maxTokens: 2800 }
+const requiredKeys = ['summary', 'strengths', 'weaknesses', 'suggestedMajors']
+
+module.exports = { buildMessages, maxTokens: 2800, requiredKeys }

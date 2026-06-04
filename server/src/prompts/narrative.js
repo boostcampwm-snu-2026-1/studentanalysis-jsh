@@ -34,4 +34,6 @@ Rules:
   ]
 }
 
-module.exports = { buildMessages, maxTokens: 1500 }
+const requiredKeys = ['narrative', 'ideas']
+
+module.exports = { buildMessages, maxTokens: 1500, requiredKeys }

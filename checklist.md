@@ -36,18 +36,18 @@
   - [x] 프롬프트 템플릿 파일 분리 (prompts/{competencyProfile,diagnosis,activityA,activityB,narrative}.js)
   - [x] 내신·모의고사 데이터 프롬프트 주입 유틸 함수
 
-- [ ] feature/5: AI 5단계 분석 API
-  - [ ] competencyProfile 호출 및 JSON 파싱 (careerFitScore, continuityScore 등)
-  - [ ] diagnosis 호출 및 JSON 파싱 (summary, strengths, weaknesses, suggestedMajors)
-  - [ ] activityA 호출 및 JSON 파싱 (stable, intensive)
-  - [ ] activityB 호출 및 JSON 파싱 (differentiated, practical)
-  - [ ] narrative 호출 및 JSON 파싱 (narrative, ideas[6])
-  - [ ] Promise.all 병렬 호출 AnalysisService 구현
-  - [ ] 항목별 필수 JSON 키 누락 검증 로직
-  - [ ] 파싱 실패 시 해당 항목 독립 재시도 (최대 1회)
-  - [ ] `POST /api/students/:id/analyze` 분석 요청 및 결과 저장
-  - [ ] `GET /api/students/:id/analyses` 분석 이력 목록 (최신순)
-  - [ ] `GET /api/analyses/:id` 분석 결과 상세 조회
+- [x] feature/5: AI 5단계 분석 API
+  - [x] competencyProfile 호출 및 JSON 파싱 (careerFitScore, continuityScore 등)
+  - [x] diagnosis 호출 및 JSON 파싱 (summary, strengths, weaknesses, suggestedMajors)
+  - [x] activityA 호출 및 JSON 파싱 (stable, intensive)
+  - [x] activityB 호출 및 JSON 파싱 (differentiated, practical)
+  - [x] narrative 호출 및 JSON 파싱 (narrative, ideas[6])
+  - [x] Promise.all 병렬 호출 AnalysisService 구현
+  - [x] 항목별 필수 JSON 키 누락 검증 로직
+  - [x] 파싱 실패 시 해당 항목 독립 재시도 (최대 1회)
+  - [x] `POST /api/students/:id/analyze` 분석 요청 및 결과 저장
+  - [x] `GET /api/students/:id/analysis` 분석 이력 목록 (최신순)
+  - [x] `GET /api/analysis/:id` 분석 결과 상세 조회
 
 - [ ] feature/6: Consultation 모델 및 상담 API
   - [ ] Consultation Mongoose 스키마 정의 (studentId, analysisId?, consultedAt, type, content 등)

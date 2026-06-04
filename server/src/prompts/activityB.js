@@ -35,4 +35,6 @@ Definitions:
   ]
 }
 
-module.exports = { buildMessages, maxTokens: 3800 }
+const requiredKeys = ['differentiated', 'practical']
+
+module.exports = { buildMessages, maxTokens: 3800, requiredKeys }
