@@ -48,7 +48,7 @@ feature의 모든 하위 항목 구현이 끝났을 때, 원격에 push하고 PR
 변경 후 반드시 커밋 안내를 한다:
 ```
 git add checklist.md
-git commit -m "chore: feature/[번호] 완료 체크"
+git commit -m "docs: feature/[번호] 완료 체크"
 ```
 
 ### 4. push 안내

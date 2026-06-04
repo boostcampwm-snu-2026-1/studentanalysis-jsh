@@ -36,7 +36,7 @@
   - [x] 프롬프트 템플릿 파일 분리 (prompts/{competencyProfile,diagnosis,activityA,activityB,narrative}.js)
   - [x] 내신·모의고사 데이터 프롬프트 주입 유틸 함수
 
-- [ ] feature/5: AI 5단계 분석 API
+- [x] feature/5: AI 5단계 분석 API
   - [x] competencyProfile 호출 및 JSON 파싱 (careerFitScore, continuityScore 등)
   - [x] diagnosis 호출 및 JSON 파싱 (summary, strengths, weaknesses, suggestedMajors)
   - [x] activityA 호출 및 JSON 파싱 (stable, intensive)
