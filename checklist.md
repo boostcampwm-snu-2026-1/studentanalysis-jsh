@@ -40,7 +40,7 @@
   - [x] competencyProfile 호출 및 JSON 파싱 (careerFitScore, continuityScore 등)
   - [x] diagnosis 호출 및 JSON 파싱 (summary, strengths, weaknesses, suggestedMajors)
   - [x] activityA 호출 및 JSON 파싱 (stable, intensive)
-  - [ ] activityB 호출 및 JSON 파싱 (differentiated, practical)
+  - [x] activityB 호출 및 JSON 파싱 (differentiated, practical)
   - [ ] narrative 호출 및 JSON 파싱 (narrative, ideas[6])
   - [ ] Promise.all 병렬 호출 AnalysisService 구현
   - [ ] 항목별 필수 JSON 키 누락 검증 로직
