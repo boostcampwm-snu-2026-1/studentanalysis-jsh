@@ -35,4 +35,15 @@ async function runNarrative(inputData) {
   return callOpenAI(narrativePrompt, inputData)
 }
 
-module.exports = { runCompetencyProfile, runDiagnosis, runActivityA, runActivityB, runNarrative }
+async function analyze(inputData) {
+  const [competencyProfile, diagnosis, activityA, activityB, narrative] = await Promise.all([
+    runCompetencyProfile(inputData),
+    runDiagnosis(inputData),
+    runActivityA(inputData),
+    runActivityB(inputData),
+    runNarrative(inputData),
+  ])
+  return { competencyProfile, diagnosis, activityA, activityB, narrative }
+}
+
+module.exports = { runCompetencyProfile, runDiagnosis, runActivityA, runActivityB, runNarrative, analyze }
