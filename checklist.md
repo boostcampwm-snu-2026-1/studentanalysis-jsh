@@ -37,8 +37,8 @@
   - [x] 내신·모의고사 데이터 프롬프트 주입 유틸 함수
 
 - [ ] feature/5: AI 5단계 분석 API
-  - [ ] competencyProfile 호출 및 JSON 파싱 (careerFitScore, continuityScore 등)
-  - [ ] diagnosis 호출 및 JSON 파싱 (summary, strengths, weaknesses, suggestedMajors)
+  - [x] competencyProfile 호출 및 JSON 파싱 (careerFitScore, continuityScore 등)
+  - [x] diagnosis 호출 및 JSON 파싱 (summary, strengths, weaknesses, suggestedMajors)
   - [ ] activityA 호출 및 JSON 파싱 (stable, intensive)
   - [ ] activityB 호출 및 JSON 파싱 (differentiated, practical)
   - [ ] narrative 호출 및 JSON 파싱 (narrative, ideas[6])
