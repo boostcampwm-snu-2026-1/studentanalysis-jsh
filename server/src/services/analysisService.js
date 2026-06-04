@@ -1,6 +1,7 @@
 const openai = require('../openaiClient')
 const competencyProfilePrompt = require('../prompts/competencyProfile')
 const diagnosisPrompt = require('../prompts/diagnosis')
+const activityAPrompt = require('../prompts/activityA')
 
 async function callOpenAI(promptModule, inputData) {
   const messages = promptModule.buildMessages(inputData)
@@ -20,4 +21,8 @@ async function runDiagnosis(inputData) {
   return callOpenAI(diagnosisPrompt, inputData)
 }
 
-module.exports = { runCompetencyProfile, runDiagnosis }
+async function runActivityA(inputData) {
+  return callOpenAI(activityAPrompt, inputData)
+}
+
+module.exports = { runCompetencyProfile, runDiagnosis, runActivityA }
