@@ -12,7 +12,10 @@ async function callOpenAI(promptModule, inputData) {
     messages,
     max_tokens: promptModule.maxTokens,
   })
-  return JSON.parse(res.choices[0].message.content)
+  const parsed = JSON.parse(res.choices[0].message.content)
+  const missing = promptModule.requiredKeys.filter(k => !(k in parsed))
+  if (missing.length > 0) throw { status: 500, message: `분석 결과에 필수 키가 누락됐습니다: ${missing.join(', ')}` }
+  return parsed
 }
 
 async function runCompetencyProfile(inputData) {

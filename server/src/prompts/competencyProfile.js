@@ -42,4 +42,11 @@ Competency definitions:
   ]
 }
 
-module.exports = { buildMessages, maxTokens: 3500 }
+const requiredKeys = [
+  'careerFitScore', 'careerFitEvidence',
+  'continuityScore', 'continuityEvidence',
+  'narrativeScore', 'narrativeEvidence',
+  'depthScore', 'depthEvidence',
+]
+
+module.exports = { buildMessages, maxTokens: 3500, requiredKeys }

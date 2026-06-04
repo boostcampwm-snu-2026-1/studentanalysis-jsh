@@ -35,4 +35,6 @@ Definitions:
   ]
 }
 
-module.exports = { buildMessages, maxTokens: 3800 }
+const requiredKeys = ['stable', 'intensive']
+
+module.exports = { buildMessages, maxTokens: 3800, requiredKeys }
