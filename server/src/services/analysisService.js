@@ -1,4 +1,6 @@
 const openai = require('../openaiClient')
+const studentRepository = require('../repositories/studentRepository')
+const analysisRepository = require('../repositories/analysisRepository')
 const competencyProfilePrompt = require('../prompts/competencyProfile')
 const diagnosisPrompt = require('../prompts/diagnosis')
 const activityAPrompt = require('../prompts/activityA')
@@ -54,4 +56,12 @@ async function analyze(inputData) {
   return { competencyProfile, diagnosis, activityA, activityB, narrative }
 }
 
-module.exports = { runCompetencyProfile, runDiagnosis, runActivityA, runActivityB, runNarrative, analyze }
+async function runAndSave(studentId, inputText) {
+  const student = await studentRepository.findById(studentId)
+  if (!student) throw { status: 404, message: '학생을 찾을 수 없습니다.' }
+
+  const result = await analyze({ inputText, grades: student.grades, mockExams: student.mockExams })
+  return analysisRepository.create({ studentId, inputText, result })
+}
+
+module.exports = { runCompetencyProfile, runDiagnosis, runActivityA, runActivityB, runNarrative, analyze, runAndSave }
