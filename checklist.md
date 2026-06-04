@@ -44,7 +44,7 @@
   - [x] narrative 호출 및 JSON 파싱 (narrative, ideas[6])
   - [x] Promise.all 병렬 호출 AnalysisService 구현
   - [x] 항목별 필수 JSON 키 누락 검증 로직
-  - [ ] 파싱 실패 시 해당 항목 독립 재시도 (최대 1회)
+  - [x] 파싱 실패 시 해당 항목 독립 재시도 (최대 1회)
   - [ ] `POST /api/students/:id/analyze` 분석 요청 및 결과 저장
   - [ ] `GET /api/students/:id/analyses` 분석 이력 목록 (최신순)
   - [ ] `GET /api/analyses/:id` 분석 결과 상세 조회

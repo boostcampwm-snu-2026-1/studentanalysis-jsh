@@ -5,17 +5,22 @@ const activityAPrompt = require('../prompts/activityA')
 const activityBPrompt = require('../prompts/activityB')
 const narrativePrompt = require('../prompts/narrative')
 
-async function callOpenAI(promptModule, inputData) {
-  const messages = promptModule.buildMessages(inputData)
-  const res = await openai.chat.completions.create({
-    model: process.env.OPENAI_MODEL,
-    messages,
-    max_tokens: promptModule.maxTokens,
-  })
-  const parsed = JSON.parse(res.choices[0].message.content)
-  const missing = promptModule.requiredKeys.filter(k => !(k in parsed))
-  if (missing.length > 0) throw { status: 500, message: `분석 결과에 필수 키가 누락됐습니다: ${missing.join(', ')}` }
-  return parsed
+async function callOpenAI(promptModule, inputData, retries = 1) {
+  try {
+    const messages = promptModule.buildMessages(inputData)
+    const res = await openai.chat.completions.create({
+      model: process.env.OPENAI_MODEL,
+      messages,
+      max_tokens: promptModule.maxTokens,
+    })
+    const parsed = JSON.parse(res.choices[0].message.content)
+    const missing = promptModule.requiredKeys.filter(k => !(k in parsed))
+    if (missing.length > 0) throw { status: 500, message: `분석 결과에 필수 키가 누락됐습니다: ${missing.join(', ')}` }
+    return parsed
+  } catch (err) {
+    if (retries > 0) return callOpenAI(promptModule, inputData, retries - 1)
+    throw err
+  }
 }
 
 async function runCompetencyProfile(inputData) {
