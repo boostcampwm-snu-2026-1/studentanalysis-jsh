@@ -3,6 +3,15 @@ const analysisService = require('../services/analysisService')
 
 const router = express.Router({ mergeParams: true })
 
+router.get('/:studentId/analyses', async (req, res, next) => {
+  try {
+    const analysis = await analysisService.getByStudentId(req.params.studentId)
+    res.json({ data: analysis })
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.post('/:studentId/analyze', async (req, res, next) => {
   try {
     const { inputText } = req.body
