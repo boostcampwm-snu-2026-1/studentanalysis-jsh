@@ -15,51 +15,47 @@
 
 ## 2주차 — 백엔드
 
-- [ ] feature/2: Student 모델 및 기본 CRUD API
-  - [ ] Student Mongoose 스키마 정의 (name, grade, classNum, number, targetUniv, targetMajor)
-  - [ ] studentId 자동 생성 로직 (학년+반+번호 각 2자리 조합)
-  - [ ] StudentRepository 구현 (findAll, findById, create, update, delete)
-  - [ ] StudentService 구현 (필터링, 유효성 검사)
-  - [ ] `POST /api/students` 학생 등록
-  - [ ] `GET /api/students` 학생 목록 (grade, classNum 쿼리 필터)
-  - [ ] `GET /api/students/:id` 학생 상세 조회
-  - [ ] `PUT /api/students/:id` 학생 기본 정보 수정
-  - [ ] `DELETE /api/students/:id` 학생 삭제
+- [x] feature/2: Student 모델 및 기본 CRUD API
+  - [x] Student Mongoose 스키마 정의 (name, grade, classNum, number, targetUniv, targetMajor)
+  - [x] StudentRepository 구현 (findAll, findById, create, update, delete)
+  - [x] StudentService 구현 (필터링, 유효성 검사)
+    - [x] studentId 자동 생성 로직 (학년+반+번호 각 2자리 조합)
+  - [x] Student CRUD API 라우터 구현 (POST, GET, PUT, DELETE)
 
-- [ ] feature/3: 내신 · 모의고사 데이터 API
-  - [ ] grades 서브도큐먼트 스키마 정의 (semester, subjects[], avgGrade)
-  - [ ] mockExams 서브도큐먼트 스키마 정의 (date, kor/math/eng/exp 각 grade+percentile)
-  - [ ] 학기별 평균 등급 자동 계산 로직 (Service)
-  - [ ] `PUT /api/students/:id/grades` 내신 저장·수정
-  - [ ] `PUT /api/students/:id/mock-exams` 모의고사 저장·수정
+- [x] feature/3: 내신 · 모의고사 데이터 API
+  - [x] grades 서브도큐먼트 스키마 정의 (semester, subjects[], avgGrade) - 내신
+  - [x] mockExams 서브도큐먼트 스키마 정의 (date, kor/math/eng/exp 각 grade+percentile) - 모의고사
+  - [x] 학기별 평균 등급 자동 계산 로직 (Service)
+  - [x] `PUT /api/students/:id/grades` 내신 저장·수정
+  - [x] `PUT /api/students/:id/mock-exams` 모의고사 저장·수정
 
-- [ ] feature/4: Analysis 모델 및 OpenAI 연동 기반
-  - [ ] Analysis Mongoose 스키마 정의 (studentId, inputText 스냅샷, result{stage1~5}, createdAt)
-  - [ ] AnalysisRepository 구현 (create, findByStudentId, findById)
-  - [ ] OpenAI 클라이언트 설정 (환경변수 OPENAI_API_KEY, OPENAI_MODEL)
-  - [ ] 프롬프트 템플릿 파일 분리 (prompts/stage1~5.js)
-  - [ ] 내신·모의고사 데이터 프롬프트 주입 유틸 함수
+- [x] feature/4: Analysis 모델 및 OpenAI 연동 기반
+  - [x] Analysis Mongoose 스키마 정의 (studentId, inputText 스냅샷, result{competencyProfile, diagnosis, activityA, activityB, narrative}, createdAt)
+  - [x] AnalysisRepository 구현 (create, findByStudentId, findById)
+  - [x] OpenAI 클라이언트 설정 (환경변수 OPENAI_API_KEY, OPENAI_MODEL)
+  - [x] 프롬프트 템플릿 파일 분리 (prompts/{competencyProfile,diagnosis,activityA,activityB,narrative}.js)
+  - [x] 내신·모의고사 데이터 프롬프트 주입 유틸 함수
 
-- [ ] feature/5: AI 5단계 분석 API
-  - [ ] 1단계 역량 프로필 호출 및 JSON 파싱 (careerFitScore, continuityScore 등)
-  - [ ] 2단계 종합 진단 호출 및 JSON 파싱 (summary, strengths, weaknesses, suggestedMajors)
-  - [ ] 3단계 활동 추천 A 호출 및 JSON 파싱 (stable, intensive)
-  - [ ] 4단계 활동 추천 B 호출 및 JSON 파싱 (differentiated, practical)
-  - [ ] 5단계 서사 설계 호출 및 JSON 파싱 (narrative, ideas[6])
-  - [ ] 5단계 Promise.all 병렬 호출 AnalysisService 구현
-  - [ ] 단계별 필수 JSON 키 누락 검증 로직
-  - [ ] 파싱 실패 시 해당 단계 독립 재시도 (최대 1회)
-  - [ ] `POST /api/students/:id/analyze` 분석 요청 및 결과 저장
-  - [ ] `GET /api/students/:id/analyses` 분석 이력 목록 (최신순)
-  - [ ] `GET /api/analyses/:id` 분석 결과 상세 조회
+- [x] feature/5: AI 5단계 분석 API
+  - [x] competencyProfile 호출 및 JSON 파싱 (careerFitScore, continuityScore 등)
+  - [x] diagnosis 호출 및 JSON 파싱 (summary, strengths, weaknesses, suggestedMajors)
+  - [x] activityA 호출 및 JSON 파싱 (stable, intensive)
+  - [x] activityB 호출 및 JSON 파싱 (differentiated, practical)
+  - [x] narrative 호출 및 JSON 파싱 (narrative, ideas[6])
+  - [x] Promise.all 병렬 호출 AnalysisService 구현
+  - [x] 항목별 필수 JSON 키 누락 검증 로직
+  - [x] 파싱 실패 시 해당 항목 독립 재시도 (최대 1회)
+  - [x] `POST /api/students/:id/analyze` 분석 요청 및 결과 저장
+  - [x] `GET /api/students/:id/analysis` 분석 이력 목록 (최신순)
+  - [x] `GET /api/analysis/:id` 분석 결과 상세 조회
 
-- [ ] feature/6: Consultation 모델 및 상담 API
-  - [ ] Consultation Mongoose 스키마 정의 (studentId, analysisId?, consultedAt, type, content 등)
-  - [ ] ConsultationRepository 구현 (create, findByStudentId, update)
-  - [ ] ConsultationService 구현
-  - [ ] `GET /api/students/:id/consultations` 상담 이력 목록
-  - [ ] `POST /api/consultations` 상담 기록 생성 (analysisId 선택)
-  - [ ] `PUT /api/consultations/:id` 상담 기록 수정
+- [x] feature/6: Consultation 모델 및 상담 API
+  - [x] Consultation Mongoose 스키마 정의 (studentId, analysisId?, consultedAt, type, content 등)
+  - [x] ConsultationRepository 구현 (create, findByStudentId, update)
+  - [x] ConsultationService 구현
+  - [x] `GET /api/students/:id/consultations` 상담 이력 목록
+  - [x] `POST /api/consultations` 상담 기록 생성 (analysisId 선택)
+  - [x] `PUT /api/consultations/:id` 상담 기록 수정
 
 ---
 
