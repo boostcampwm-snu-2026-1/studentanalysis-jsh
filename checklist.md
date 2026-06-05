@@ -50,7 +50,7 @@
   - [x] `GET /api/analysis/:id` 분석 결과 상세 조회
 
 - [ ] feature/6: Consultation 모델 및 상담 API
-  - [ ] Consultation Mongoose 스키마 정의 (studentId, analysisId?, consultedAt, type, content 등)
+  - [x] Consultation Mongoose 스키마 정의 (studentId, analysisId?, consultedAt, type, content 등)
   - [ ] ConsultationRepository 구현 (create, findByStudentId, update)
   - [ ] ConsultationService 구현
   - [ ] `GET /api/students/:id/consultations` 상담 이력 목록
