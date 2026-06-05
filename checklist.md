@@ -49,13 +49,13 @@
   - [x] `GET /api/students/:id/analysis` 분석 이력 목록 (최신순)
   - [x] `GET /api/analysis/:id` 분석 결과 상세 조회
 
-- [ ] feature/6: Consultation 모델 및 상담 API
-  - [ ] Consultation Mongoose 스키마 정의 (studentId, analysisId?, consultedAt, type, content 등)
-  - [ ] ConsultationRepository 구현 (create, findByStudentId, update)
-  - [ ] ConsultationService 구현
-  - [ ] `GET /api/students/:id/consultations` 상담 이력 목록
-  - [ ] `POST /api/consultations` 상담 기록 생성 (analysisId 선택)
-  - [ ] `PUT /api/consultations/:id` 상담 기록 수정
+- [x] feature/6: Consultation 모델 및 상담 API
+  - [x] Consultation Mongoose 스키마 정의 (studentId, analysisId?, consultedAt, type, content 등)
+  - [x] ConsultationRepository 구현 (create, findByStudentId, update)
+  - [x] ConsultationService 구현
+  - [x] `GET /api/students/:id/consultations` 상담 이력 목록
+  - [x] `POST /api/consultations` 상담 기록 생성 (analysisId 선택)
+  - [x] `PUT /api/consultations/:id` 상담 기록 수정
 
 ---
 

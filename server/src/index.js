@@ -6,6 +6,7 @@ const errorHandler = require('./middleware/errorHandler')
 
 const studentsRouter = require('./routes/students')
 const analysisRouter = require('./routes/analysis')
+const { studentConsultationsRouter, consultationsRouter } = require('./routes/consultations')
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -22,6 +23,8 @@ app.get('/', (req, res) => {
 app.use('/api/students', studentsRouter)
 app.use('/api/students', analysisRouter)
 app.use('/api/analysis', analysisRouter)
+app.use('/api/students', studentConsultationsRouter)
+app.use('/api/consultations', consultationsRouter)
 
 app.use(errorHandler)
 
