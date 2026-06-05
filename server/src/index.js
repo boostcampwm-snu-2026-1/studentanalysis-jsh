@@ -24,6 +24,7 @@ app.use('/api/students', studentsRouter)
 app.use('/api/students', analysisRouter)
 app.use('/api/analysis', analysisRouter)
 app.use('/api/students', consultationsRouter)
+app.use('/api/consultations', consultationsRouter)
 
 app.use(errorHandler)
 

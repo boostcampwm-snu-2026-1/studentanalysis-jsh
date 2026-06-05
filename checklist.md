@@ -54,7 +54,7 @@
   - [x] ConsultationRepository 구현 (create, findByStudentId, update)
   - [x] ConsultationService 구현
   - [x] `GET /api/students/:id/consultations` 상담 이력 목록
-  - [ ] `POST /api/consultations` 상담 기록 생성 (analysisId 선택)
+  - [x] `POST /api/consultations` 상담 기록 생성 (analysisId 선택)
   - [ ] `PUT /api/consultations/:id` 상담 기록 수정
 
 ---

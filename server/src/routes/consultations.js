@@ -12,4 +12,13 @@ router.get('/:studentId/consultations', async (req, res, next) => {
   }
 })
 
+router.post('/', async (req, res, next) => {
+  try {
+    const consultation = await consultationService.create(req.body)
+    res.status(201).json({ data: consultation })
+  } catch (err) {
+    next(err)
+  }
+})
+
 module.exports = router
