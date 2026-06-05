@@ -21,4 +21,13 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+router.put('/:id', async (req, res, next) => {
+  try {
+    const consultation = await consultationService.update(req.params.id, req.body)
+    res.json({ data: consultation })
+  } catch (err) {
+    next(err)
+  }
+})
+
 module.exports = router

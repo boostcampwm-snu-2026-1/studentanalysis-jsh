@@ -55,7 +55,7 @@
   - [x] ConsultationService 구현
   - [x] `GET /api/students/:id/consultations` 상담 이력 목록
   - [x] `POST /api/consultations` 상담 기록 생성 (analysisId 선택)
-  - [ ] `PUT /api/consultations/:id` 상담 기록 수정
+  - [x] `PUT /api/consultations/:id` 상담 기록 수정
 
 ---
 
