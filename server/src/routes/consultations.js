@@ -1,9 +1,10 @@
 const express = require('express')
 const consultationService = require('../services/consultationService')
 
-const router = express.Router({ mergeParams: true })
+const studentConsultationsRouter = express.Router({ mergeParams: true })
+const consultationsRouter = express.Router()
 
-router.get('/:studentId/consultations', async (req, res, next) => {
+studentConsultationsRouter.get('/:studentId/consultations', async (req, res, next) => {
   try {
     const consultations = await consultationService.getByStudentId(req.params.studentId)
     res.json({ data: consultations })
@@ -12,7 +13,7 @@ router.get('/:studentId/consultations', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+consultationsRouter.post('/', async (req, res, next) => {
   try {
     const consultation = await consultationService.create(req.body)
     res.status(201).json({ data: consultation })
@@ -21,7 +22,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/:id', async (req, res, next) => {
+consultationsRouter.put('/:id', async (req, res, next) => {
   try {
     const consultation = await consultationService.update(req.params.id, req.body)
     res.json({ data: consultation })
@@ -30,4 +31,4 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
-module.exports = router
+module.exports = { studentConsultationsRouter, consultationsRouter }
