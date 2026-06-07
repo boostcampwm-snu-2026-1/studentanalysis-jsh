@@ -58,10 +58,11 @@ studentanalysis-jsh/
 ## 컨벤션
 
 ### 공통
-- 파일명: camelCase (JS 파일), kebab-case (설정 파일)
+- 파일명: camelCase (TS/TSX 파일), kebab-case (설정 파일)
 - 변수/함수: camelCase
 - 상수: UPPER_SNAKE_CASE
 - 클래스/컴포넌트: PascalCase
+- 타입/인터페이스: PascalCase (`I` 접두사 없이 `Student`, `Consultation` 등으로)
 
 ### API 응답 형식 (server)
 ```json
@@ -89,3 +90,4 @@ studentanalysis-jsh/
 - `main`: 배포 브랜치
 - `dev`: 통합 브랜치
 - `feature/[이슈번호]-[기능명]`: 기능 개발 브랜치 → dev로 PR
+- `refactor/[기능명]`: 리팩토링 브랜치 → dev로 PR
