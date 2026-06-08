@@ -1,11 +1,10 @@
-﻿// @ts-nocheck
-const Analysis = require('../models/Analysis')
+import Analysis, { IAnalysis } from '../models/Analysis'
 
-const create = (data) => Analysis.create(data)
+const create = (data: Partial<IAnalysis>) => Analysis.create(data)
 
-const findByStudentId = (studentId) =>
+const findByStudentId = (studentId: string) =>
   Analysis.find({ studentId }).sort({ createdAt: -1 })
 
-const findById = (id) => Analysis.findById(id)
+const findById = (id: string) => Analysis.findById(id)
 
-module.exports = { create, findByStudentId, findById }
+export { create, findByStudentId, findById }

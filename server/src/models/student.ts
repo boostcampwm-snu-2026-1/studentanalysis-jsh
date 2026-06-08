@@ -1,15 +1,27 @@
-﻿// @ts-nocheck
-const mongoose = require('mongoose')
+import mongoose, { Schema, Document } from 'mongoose'
+import { ISubject, IGrade, IExamSubject, IEngSubject, IMockExam } from '../types'
 
-const subjectSchema = new mongoose.Schema(
-  { 
-    name: { type: String, required: true }, 
-    grade: { type: Number, required: true, min: 1, max: 9 } 
+export interface IStudent extends Document {
+  studentId: string
+  name: string
+  grade: number
+  classNum: number
+  number: number
+  targetUniv: string
+  targetMajor: string
+  grades: IGrade[]
+  mockExams: IMockExam[]
+}
+
+const subjectSchema = new Schema<ISubject>(
+  {
+    name: { type: String, required: true },
+    grade: { type: Number, required: true, min: 1, max: 9 },
   },
   { _id: false }
 )
 
-const gradeSchema = new mongoose.Schema(
+const gradeSchema = new Schema<IGrade>(
   {
     year: { type: Number, required: true },
     semester: { type: Number, required: true, min: 1, max: 2 },
@@ -18,17 +30,17 @@ const gradeSchema = new mongoose.Schema(
   { _id: false }
 )
 
-const examSubjectSchema = new mongoose.Schema(
+const examSubjectSchema = new Schema<IExamSubject>(
   { grade: { type: Number, min: 1, max: 9 }, percentile: { type: Number, min: 0, max: 100 } },
   { _id: false }
 )
 
-const engSchema = new mongoose.Schema(
+const engSchema = new Schema<IEngSubject>(
   { grade: { type: Number, min: 1, max: 9 } },
   { _id: false }
 )
 
-const mockExamSchema = new mongoose.Schema(
+const mockExamSchema = new Schema<IMockExam>(
   {
     year: { type: Number, required: true },
     month: { type: Number, required: true, min: 1, max: 12 },
@@ -41,7 +53,7 @@ const mockExamSchema = new mongoose.Schema(
   { _id: false }
 )
 
-const studentSchema = new mongoose.Schema(
+const studentSchema = new Schema<IStudent>(
   {
     studentId: { type: String, required: true, unique: true },
     name: { type: String, required: true },
@@ -56,4 +68,4 @@ const studentSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-module.exports = mongoose.model('Student', studentSchema)
+export default mongoose.model<IStudent>('Student', studentSchema)

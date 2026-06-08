@@ -1,15 +1,18 @@
-﻿// @ts-nocheck
-const buildStudentContext = (grades, mockExams) => {
-  const parts = []
+import { IGrade, IMockExam } from '../types'
+
+const buildStudentContext = (grades: IGrade[], mockExams: IMockExam[]): string => {
+  const parts: string[] = []
+
   if (grades && grades.length > 0) {
-    const lines = grades.map(g =>
-      `${g.year}학년 ${g.semester}학기: ${g.subjects.map(s => `${s.name} ${s.grade}등급`).join(', ')} (평균 ${g.avgGrade}등급)`
+    const lines = grades.map((g) =>
+      `${g.year}학년 ${g.semester}학기: ${g.subjects.map((s) => `${s.name} ${s.grade}등급`).join(', ')} (평균 ${g.avgGrade}등급)`
     )
     parts.push(`[내신 성적]\n${lines.join('\n')}`)
   }
+
   if (mockExams && mockExams.length > 0) {
-    const lines = mockExams.map(e => {
-      const subjects = []
+    const lines = mockExams.map((e) => {
+      const subjects: string[] = []
       if (e.kor?.grade) subjects.push(`국어 ${e.kor.grade}등급${e.kor.percentile != null ? ` (${e.kor.percentile}%)` : ''}`)
       if (e.math?.grade) subjects.push(`수학 ${e.math.grade}등급${e.math.percentile != null ? ` (${e.math.percentile}%)` : ''}`)
       if (e.eng?.grade) subjects.push(`영어 ${e.eng.grade}등급`)
@@ -19,7 +22,8 @@ const buildStudentContext = (grades, mockExams) => {
     })
     parts.push(`[모의고사 성적]\n${lines.join('\n')}`)
   }
+
   return parts.join('\n\n')
 }
 
-module.exports = buildStudentContext
+export default buildStudentContext

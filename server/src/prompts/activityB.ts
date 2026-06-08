@@ -1,7 +1,7 @@
-﻿// @ts-nocheck
-const buildStudentContext = require('../utils/buildStudentContext')
+import buildStudentContext from '../utils/buildStudentContext'
+import { PromptInput, ChatMessage } from '../types'
 
-const buildMessages = ({ inputText, grades, mockExams }) => {
+const buildMessages = ({ inputText, grades, mockExams }: PromptInput): ChatMessage[] => {
   const context = buildStudentContext(grades, mockExams)
 
   return [
@@ -38,4 +38,5 @@ Definitions:
 
 const requiredKeys = ['differentiated', 'practical']
 
-module.exports = { buildMessages, maxTokens: 3800, requiredKeys }
+export { buildMessages, requiredKeys }
+export const maxTokens = 3800

@@ -1,15 +1,15 @@
-﻿// @ts-nocheck
-const Student = require('../models/student')
+import Student, { IStudent } from '../models/student'
 
-const findAll = (filter = {}) => Student.find(filter).sort({ studentId: 1 })
+const findAll = (filter: Record<string, unknown> = {}) =>
+  Student.find(filter).sort({ studentId: 1 })
 
-const findById = (studentId) => Student.findOne({ studentId })
+const findById = (studentId: string) => Student.findOne({ studentId })
 
-const create = (data) => Student.create(data)
+const create = (data: Partial<IStudent>) => Student.create(data)
 
-const update = (studentId, data) =>
+const update = (studentId: string, data: Partial<IStudent>) =>
   Student.findOneAndUpdate({ studentId }, data, { new: true, runValidators: true })
 
-const remove = (studentId) => Student.findOneAndDelete({ studentId })
+const remove = (studentId: string) => Student.findOneAndDelete({ studentId })
 
-module.exports = { findAll, findById, create, update, remove }
+export { findAll, findById, create, update, remove }

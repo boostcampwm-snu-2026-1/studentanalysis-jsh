@@ -1,12 +1,11 @@
-﻿// @ts-nocheck
-const Consultation = require('../models/Consultation')
+import Consultation, { IConsultation } from '../models/Consultation'
 
-const create = (data) => Consultation.create(data)
+const create = (data: Partial<IConsultation>) => Consultation.create(data)
 
-const findByStudentId = (studentId) =>
+const findByStudentId = (studentId: string) =>
   Consultation.find({ studentId }).sort({ consultedAt: -1 })
 
-const update = (id, data) =>
+const update = (id: string, data: Partial<IConsultation>) =>
   Consultation.findByIdAndUpdate(id, data, { new: true, runValidators: true })
 
-module.exports = { create, findByStudentId, update }
+export { create, findByStudentId, update }
