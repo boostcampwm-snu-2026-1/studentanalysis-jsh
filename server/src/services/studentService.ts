@@ -1,3 +1,4 @@
+﻿// @ts-nocheck
 const repo = require('../repositories/studentRepository')
 
 const generateStudentId = (grade, classNum, number) =>

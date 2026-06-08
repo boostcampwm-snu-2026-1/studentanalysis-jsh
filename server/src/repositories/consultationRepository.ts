@@ -1,3 +1,4 @@
+﻿// @ts-nocheck
 const Consultation = require('../models/Consultation')
 
 const create = (data) => Consultation.create(data)

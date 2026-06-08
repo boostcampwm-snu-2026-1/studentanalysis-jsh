@@ -1,3 +1,4 @@
+﻿// @ts-nocheck
 const buildStudentContext = require('../utils/buildStudentContext')
 
 const buildMessages = ({ inputText, grades, mockExams }) => {

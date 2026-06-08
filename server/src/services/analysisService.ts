@@ -1,3 +1,4 @@
+﻿// @ts-nocheck
 const openai = require('../openaiClient')
 const studentRepository = require('../repositories/studentRepository')
 const analysisRepository = require('../repositories/analysisRepository')

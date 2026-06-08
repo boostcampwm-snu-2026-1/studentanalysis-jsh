@@ -1,3 +1,4 @@
+﻿// @ts-nocheck
 const Analysis = require('../models/Analysis')
 
 const create = (data) => Analysis.create(data)

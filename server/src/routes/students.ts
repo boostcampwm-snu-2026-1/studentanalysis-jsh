@@ -1,3 +1,4 @@
+﻿// @ts-nocheck
 const express = require('express')
 const service = require('../services/studentService')
 

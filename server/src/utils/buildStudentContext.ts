@@ -1,3 +1,4 @@
+﻿// @ts-nocheck
 const buildStudentContext = (grades, mockExams) => {
   const parts = []
   if (grades && grades.length > 0) {

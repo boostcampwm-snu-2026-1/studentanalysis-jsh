@@ -1,3 +1,4 @@
+﻿// @ts-nocheck
 const repo = require('../repositories/consultationRepository')
 
 const getByStudentId = (studentId) => repo.findByStudentId(studentId)

@@ -1,3 +1,4 @@
+﻿// @ts-nocheck
 const Student = require('../models/student')
 
 const findAll = (filter = {}) => Student.find(filter).sort({ studentId: 1 })
