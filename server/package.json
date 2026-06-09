@@ -2,8 +2,8 @@
   "name": "server",
   "version": "1.0.0",
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "start": "node src/index.js"
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",
