@@ -26,6 +26,7 @@
 | 구분 | 선택 |
 |---|---|
 | Frontend | React + Vite + **TypeScript** |
+| Styling | Tailwind CSS v3 |
 | Routing | React Router v6 |
 | Backend | Node.js + Express + **TypeScript** |
 | DB | MongoDB Atlas (Mongoose) |

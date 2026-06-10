@@ -14,7 +14,10 @@ studentanalysis-jsh/
 │   │   ├── pages/        # 라우트별 페이지 컴포넌트
 │   │   ├── hooks/        # 커스텀 훅
 │   │   ├── api/          # fetch 래퍼, API 클라이언트
+│   │   ├── styles/       # globals.css (Tailwind 디렉티브)
 │   │   └── utils/        # 순수 유틸 함수
+│   ├── tailwind.config.js  # 디자인 토큰 (DESIGN.md 기준)
+│   ├── postcss.config.js
 │   ├── .env              # VITE_ 접두사 변수만 (브라우저 노출됨)
 │   └── package.json
 │
@@ -54,6 +57,12 @@ studentanalysis-jsh/
 ### 패키지 관리
 - npm 사용. workspace 없이 client/server 각각 독립 `package.json`
 - client, server 각 디렉토리에서 별도로 `npm install`
+
+### 스타일 (client)
+- Tailwind CSS v3 사용. 인라인 스타일 사용 금지
+- 디자인 토큰은 `tailwind.config.js`의 `theme.extend`에 등록 (`theme` 직접 교체 금지 — 기본값이 사라짐)
+- 색상·폰트·간격은 `DESIGN.md` 기준. 임의 값 사용 금지 (`bg-[#476274]` 대신 `bg-primary`)
+- 전역 스타일은 `src/styles/globals.css`에만 작성
 
 ## 컨벤션
 
