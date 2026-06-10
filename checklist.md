@@ -61,7 +61,7 @@
 
 ## 2.5주차 — TypeScript 전환
 
-- [ ] refactor: TypeScript 전환 (server + client)
+- [x] refactor: TypeScript 전환 (server + client)
   - [x] server: `typescript`, `tsx`, `@types/node`, `@types/express`, `@types/cors` 설치
   - [x] server: `tsconfig.json` 작성
   - [x] server: `.js` → `.ts` 파일 확장자 변경 (22개)
