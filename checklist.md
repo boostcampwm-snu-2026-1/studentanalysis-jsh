@@ -69,7 +69,7 @@
   - [x] server: `package.json` 스크립트 수정 (`tsx` 실행)
   - [x] client: `typescript`, `@types/react`, `@types/react-dom` 설치
   - [x] client: `tsconfig.json` 작성
-  - [ ] client: `.jsx` → `.tsx` 파일 확장자 변경
+  - [x] client: `.jsx` → `.tsx` 파일 확장자 변경
 
 ---
 
