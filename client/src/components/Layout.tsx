@@ -3,9 +3,9 @@ import Header from './Header'
 
 export default function Layout() {
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f9f9f9' }}>
+    <div className="min-h-screen bg-surface">
       <Header />
-      <main style={{ maxWidth: '1280px', margin: '0 auto', padding: '40px 64px' }}>
+      <main className="max-w-content mx-auto px-16 py-10">
         <Outlet />
       </main>
     </div>

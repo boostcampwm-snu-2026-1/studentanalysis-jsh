@@ -2,34 +2,15 @@ import { Link } from 'react-router-dom'
 
 export default function Header() {
   return (
-    <header style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: '0 64px',
-      height: '64px',
-      backgroundColor: '#ffffff',
-      borderBottom: '1px solid #c2c7cc',
-    }}>
-      <Link to="/" style={{ textDecoration: 'none', color: '#476274', fontWeight: 600, fontSize: '18px' }}>
+    <header className="flex items-center justify-between px-16 h-16 bg-surface-container-lowest border-b border-outline-variant">
+      <Link to="/" className="text-primary font-semibold text-lg no-underline">
         StudentAnalysis
       </Link>
-      <nav style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-        <Link to="/students" style={{ textDecoration: 'none', color: '#42474c', fontSize: '14px', fontWeight: 600 }}>
+      <nav className="flex items-center gap-6">
+        <Link to="/students" className="text-on-surface-variant text-sm font-semibold no-underline hover:text-on-surface">
           학생 목록
         </Link>
-        <Link
-          to="/students/new"
-          style={{
-            textDecoration: 'none',
-            backgroundColor: '#b3cfe5',
-            color: '#1a1c1c',
-            fontSize: '14px',
-            fontWeight: 600,
-            padding: '8px 24px',
-            borderRadius: '4px',
-          }}
-        >
+        <Link to="/students/new" className="bg-primary-container text-on-primary-container text-sm font-semibold px-6 py-2 rounded no-underline hover:opacity-90">
           학생 등록
         </Link>
       </nav>

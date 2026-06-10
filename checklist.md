@@ -80,7 +80,7 @@
   - [x] 공통 레이아웃 컴포넌트 (Header, Layout)
   - [ ] API 클라이언트 모듈 세팅 (fetch 래퍼, baseURL, 에러 핸들링)
   - [ ] 공통 컴포넌트 — Button, Input, Modal, Badge
-  - [ ] 디자인 토큰 적용 (색상, 폰트, 간격 — DESIGN.md 기준)
+  - [x] 디자인 토큰 적용 (색상, 폰트, 간격 — DESIGN.md 기준)
 
 - [ ] feature/8: 학생 목록 · 등록 UI
   - [ ] 홈 페이지 (`/`) 서비스 소개 화면
