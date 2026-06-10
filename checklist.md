@@ -75,12 +75,12 @@
 
 ## 3주차 — 프론트엔드 + 배포
 
-- [ ] feature/7: 공통 UI 세팅 및 라우팅
-  - [ ] React Router v6 라우팅 구성 (/, /students, /students/new, /students/:id)
-  - [ ] 공통 레이아웃 컴포넌트 (Header, Layout)
-  - [ ] API 클라이언트 모듈 세팅 (fetch 래퍼, baseURL, 에러 핸들링)
-  - [ ] 공통 컴포넌트 — Button, Input, Modal, Badge
-  - [ ] 디자인 토큰 적용 (색상, 폰트, 간격 — DESIGN.md 기준)
+- [x] feature/7: 공통 UI 세팅 및 라우팅
+  - [x] React Router v6 라우팅 구성 (/, /students, /students/new, /students/:id)
+  - [x] 공통 레이아웃 컴포넌트 (Header, Layout)
+  - [x] API 클라이언트 모듈 세팅 (fetch 래퍼, baseURL, 에러 핸들링)
+  - [x] 공통 컴포넌트 — Button, Input, Modal, Badge
+  - [x] 디자인 토큰 적용 (색상, 폰트, 간격 — DESIGN.md 기준)
 
 - [ ] feature/8: 학생 목록 · 등록 UI
   - [ ] 홈 페이지 (`/`) 서비스 소개 화면

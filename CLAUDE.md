@@ -14,7 +14,10 @@ studentanalysis-jsh/
 │   │   ├── pages/        # 라우트별 페이지 컴포넌트
 │   │   ├── hooks/        # 커스텀 훅
 │   │   ├── api/          # fetch 래퍼, API 클라이언트
+│   │   ├── styles/       # globals.css (Tailwind 디렉티브)
 │   │   └── utils/        # 순수 유틸 함수
+│   ├── tailwind.config.js  # 디자인 토큰 (DESIGN.md 기준)
+│   ├── postcss.config.js
 │   ├── .env              # VITE_ 접두사 변수만 (브라우저 노출됨)
 │   └── package.json
 │
@@ -55,6 +58,12 @@ studentanalysis-jsh/
 - npm 사용. workspace 없이 client/server 각각 독립 `package.json`
 - client, server 각 디렉토리에서 별도로 `npm install`
 
+### 스타일 (client)
+- Tailwind CSS v3 사용. 인라인 스타일 사용 금지
+- 디자인 토큰은 `tailwind.config.js`의 `theme.extend`에 등록 (`theme` 직접 교체 금지 — 기본값이 사라짐)
+- 색상·폰트·간격은 `DESIGN.md` 기준. 임의 값 사용 금지 (`bg-[#476274]` 대신 `bg-primary`)
+- 전역 스타일은 `src/styles/globals.css`에만 작성
+
 ## 컨벤션
 
 ### 공통
@@ -75,6 +84,9 @@ studentanalysis-jsh/
 - studentId = 학년 2자리 + 반 2자리 + 번호 2자리 (예: 3학년 2반 7번 → `030207`)
 - studentId는 unique. Service에서 생성하며 중복 시 400 응답
 - 유효성 검사 범위: grade 1–3, classNum 1–9, number 1–99
+
+### 금지 패턴 (client)
+- API 호출은 반드시 `src/api/client.ts`의 axios 인스턴스를 사용한다. 컴포넌트나 훅에서 직접 `fetch` 또는 `axios`를 import하면 에러 핸들링이 누락된다
 
 ### 금지 패턴 (server)
 - Service에서 에러를 던질 때 반드시 `throw { status, message } as AppError` 형태로 던진다. errorHandler가 `err.status`, `err.message`를 읽기 때문에, 다른 형태로 던지면 500 에러가 발생한다

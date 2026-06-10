@@ -1,11 +1,7 @@
-import { Routes, Route } from 'react-router-dom'
+import Router from './router'
 
 function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<div>홈</div>} />
-    </Routes>
-  )
+  return <Router />
 }
 
 export default App
