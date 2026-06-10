@@ -14,7 +14,10 @@ studentanalysis-jsh/
 │   │   ├── pages/        # 라우트별 페이지 컴포넌트
 │   │   ├── hooks/        # 커스텀 훅
 │   │   ├── api/          # fetch 래퍼, API 클라이언트
+│   │   ├── styles/       # globals.css (Tailwind 디렉티브)
 │   │   └── utils/        # 순수 유틸 함수
+│   ├── tailwind.config.js  # 디자인 토큰 (DESIGN.md 기준)
+│   ├── postcss.config.js
 │   ├── .env              # VITE_ 접두사 변수만 (브라우저 노출됨)
 │   └── package.json
 │
@@ -55,13 +58,20 @@ studentanalysis-jsh/
 - npm 사용. workspace 없이 client/server 각각 독립 `package.json`
 - client, server 각 디렉토리에서 별도로 `npm install`
 
+### 스타일 (client)
+- Tailwind CSS v3 사용. 인라인 스타일 사용 금지
+- 디자인 토큰은 `tailwind.config.js`의 `theme.extend`에 등록 (`theme` 직접 교체 금지 — 기본값이 사라짐)
+- 색상·폰트·간격은 `DESIGN.md` 기준. 임의 값 사용 금지 (`bg-[#476274]` 대신 `bg-primary`)
+- 전역 스타일은 `src/styles/globals.css`에만 작성
+
 ## 컨벤션
 
 ### 공통
-- 파일명: camelCase (JS 파일), kebab-case (설정 파일)
+- 파일명: camelCase (TS/TSX 파일), kebab-case (설정 파일)
 - 변수/함수: camelCase
 - 상수: UPPER_SNAKE_CASE
 - 클래스/컴포넌트: PascalCase
+- 타입/인터페이스: PascalCase (`I` 접두사 없이 `Student`, `Consultation` 등으로)
 
 ### API 응답 형식 (server)
 ```json
@@ -75,8 +85,12 @@ studentanalysis-jsh/
 - studentId는 unique. Service에서 생성하며 중복 시 400 응답
 - 유효성 검사 범위: grade 1–3, classNum 1–9, number 1–99
 
+### 금지 패턴 (client)
+- API 호출은 반드시 `src/api/client.ts`의 axios 인스턴스를 사용한다. 컴포넌트나 훅에서 직접 `fetch` 또는 `axios`를 import하면 에러 핸들링이 누락된다
+
 ### 금지 패턴 (server)
-- Service에서 에러를 던질 때 반드시 `throw { status, message }` 형태로 던진다. errorHandler가 `err.status`, `err.message`를 읽기 때문에, 다른 형태로 던지면 500 에러가 발생한다
+- Service에서 에러를 던질 때 반드시 `throw { status, message } as AppError` 형태로 던진다. errorHandler가 `err.status`, `err.message`를 읽기 때문에, 다른 형태로 던지면 500 에러가 발생한다
+- 라우터에서 `req.params` 값에 접근할 때 반드시 `req.params['key'] as string`으로 캐스팅한다. `@types/express@5`에서 `req.params` 값이 `string | string[]`로 타이핑되기 때문에 `string`을 기대하는 서비스 함수에 그대로 전달하면 타입 에러가 발생한다
 - `findOneAndUpdate` 호출 시 반드시 `{ new: true, runValidators: true }` 옵션을 명시한다. 빠뜨리면 수정 전 문서가 반환되고 스키마 유효성 검사가 실행되지 않는다
 - 배열 안에 embed되는 서브도큐먼트 스키마는 반드시 `{ _id: false }` 옵션을 붙인다. 빠뜨리면 배열 요소마다 불필요한 `_id`가 자동 생성된다
 
@@ -89,3 +103,4 @@ studentanalysis-jsh/
 - `main`: 배포 브랜치
 - `dev`: 통합 브랜치
 - `feature/[이슈번호]-[기능명]`: 기능 개발 브랜치 → dev로 PR
+- `refactor/[기능명]`: 리팩토링 브랜치 → dev로 PR

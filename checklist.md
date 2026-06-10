@@ -59,22 +59,36 @@
 
 ---
 
+## 2.5주차 — TypeScript 전환
+
+- [x] refactor: TypeScript 전환 (server + client)
+  - [x] server: `typescript`, `tsx`, `@types/node`, `@types/express`, `@types/cors` 설치
+  - [x] server: `tsconfig.json` 작성
+  - [x] server: `.js` → `.ts` 파일 확장자 변경 (22개)
+  - [x] server: 타입 어노테이션 추가 (모델 인터페이스, 서비스, 레포지토리, 라우터)
+  - [x] server: `package.json` 스크립트 수정 (`tsx` 실행)
+  - [x] client: `typescript`, `@types/react`, `@types/react-dom` 설치
+  - [x] client: `tsconfig.json` 작성
+  - [x] client: `.jsx` → `.tsx` 파일 확장자 변경
+
+---
+
 ## 3주차 — 프론트엔드 + 배포
 
-- [ ] feature/7: 공통 UI 세팅 및 라우팅
-  - [ ] React Router v6 라우팅 구성 (/, /students, /students/new, /students/:id)
-  - [ ] 공통 레이아웃 컴포넌트 (Header, Layout)
-  - [ ] API 클라이언트 모듈 세팅 (fetch 래퍼, baseURL, 에러 핸들링)
-  - [ ] 공통 컴포넌트 — Button, Input, Modal, Badge
-  - [ ] 디자인 토큰 적용 (색상, 폰트, 간격 — DESIGN.md 기준)
+- [x] feature/7: 공통 UI 세팅 및 라우팅
+  - [x] React Router v6 라우팅 구성 (/, /students, /students/new, /students/:id)
+  - [x] 공통 레이아웃 컴포넌트 (Header, Layout)
+  - [x] API 클라이언트 모듈 세팅 (fetch 래퍼, baseURL, 에러 핸들링)
+  - [x] 공통 컴포넌트 — Button, Input, Modal, Badge
+  - [x] 디자인 토큰 적용 (색상, 폰트, 간격 — DESIGN.md 기준)
 
-- [ ] feature/8: 학생 목록 · 등록 UI
-  - [ ] 홈 페이지 (`/`) 서비스 소개 화면
-  - [ ] 학생 목록 테이블 (이름·학년·반·번호·희망대학·희망학과·관리)
-  - [ ] 학년·반 필터 드롭다운
-  - [ ] 이름·번호 검색 인풋
-  - [ ] 학번 정렬 및 페이지네이션
-  - [ ] 학생 등록 폼 (`/students/new`) — 유효성 검사 포함
+- [x] feature/8: 학생 목록 · 등록 UI
+  - [x] 홈 페이지 (`/`) 서비스 소개 화면
+  - [x] 학생 목록 테이블 (이름·학년·반·번호·희망대학·희망학과·관리)
+  - [x] 학년·반 필터 드롭다운
+  - [x] 이름·번호 검색 인풋
+  - [x] 학번 정렬 및 페이지네이션
+  - [x] 학생 등록 폼 (`/students/new`) — 유효성 검사 포함
 
 - [ ] feature/9: 학생 상세 — 기본정보 탭
   - [ ] 탭 레이아웃 컴포넌트 (기본정보 / 생기부 분석 / 상담 기록 / 대학 탐색)
@@ -114,4 +128,4 @@
   - [ ] MongoDB Atlas Network Access 설정 (0.0.0.0/0)
   - [ ] 환경변수 전체 점검 (OPENAI_API_KEY, OPENAI_MODEL, MONGODB_URI 등)
   - [ ] 환경변수 `OPENAI_MODEL`로 gpt-4o-mini ↔ gpt-4o 전환 확인
-  - [ ] dev → main PR 생성 후 배포 확인
+  - [ ] 배포 확인
