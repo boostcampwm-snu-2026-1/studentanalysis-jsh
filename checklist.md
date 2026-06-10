@@ -67,7 +67,7 @@
   - [x] server: `.js` → `.ts` 파일 확장자 변경 (22개)
   - [x] server: 타입 어노테이션 추가 (모델 인터페이스, 서비스, 레포지토리, 라우터)
   - [x] server: `package.json` 스크립트 수정 (`tsx` 실행)
-  - [ ] client: `typescript`, `@types/react`, `@types/react-dom` 설치
+  - [x] client: `typescript`, `@types/react`, `@types/react-dom` 설치
   - [ ] client: `tsconfig.json` 작성
   - [ ] client: `.jsx` → `.tsx` 파일 확장자 변경
 
