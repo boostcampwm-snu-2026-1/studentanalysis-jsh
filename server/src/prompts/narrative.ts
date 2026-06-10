@@ -1,6 +1,7 @@
-const buildStudentContext = require('../utils/buildStudentContext')
+import buildStudentContext from '../utils/buildStudentContext'
+import { PromptInput, ChatMessage } from '../types'
 
-const buildMessages = ({ inputText, grades, mockExams }) => {
+const buildMessages = ({ inputText, grades, mockExams }: PromptInput): ChatMessage[] => {
   const context = buildStudentContext(grades, mockExams)
 
   return [
@@ -36,4 +37,5 @@ Rules:
 
 const requiredKeys = ['narrative', 'ideas']
 
-module.exports = { buildMessages, maxTokens: 1500, requiredKeys }
+export { buildMessages, requiredKeys }
+export const maxTokens = 1500

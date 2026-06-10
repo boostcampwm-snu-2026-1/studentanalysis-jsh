@@ -1,11 +1,11 @@
-const mongoose = require('mongoose')
-const dns = require('dns')
+import mongoose from 'mongoose'
+import dns from 'dns'
 
 dns.setServers(['8.8.8.8', '8.8.4.4'])
 
-const connect = async () => {
+const connect = async (): Promise<void> => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI)
+    await mongoose.connect(process.env.MONGODB_URI as string)
     console.log('MongoDB connected')
   } catch (err) {
     console.error('MongoDB connection error:', err)
@@ -13,4 +13,4 @@ const connect = async () => {
   }
 }
 
-module.exports = { connect }
+export { connect }

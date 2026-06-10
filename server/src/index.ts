@@ -1,12 +1,11 @@
-require('dotenv').config()
-const express = require('express')
-const cors = require('cors')
-const db = require('./db')
-const errorHandler = require('./middleware/errorHandler')
-
-const studentsRouter = require('./routes/students')
-const analysisRouter = require('./routes/analysis')
-const { studentConsultationsRouter, consultationsRouter } = require('./routes/consultations')
+import 'dotenv/config'
+import express from 'express'
+import cors from 'cors'
+import * as db from './db'
+import errorHandler from './middleware/errorHandler'
+import studentsRouter from './routes/students'
+import analysisRouter from './routes/analysis'
+import { studentConsultationsRouter, consultationsRouter } from './routes/consultations'
 
 const app = express()
 const PORT = process.env.PORT || 3000

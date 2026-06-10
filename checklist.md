@@ -59,6 +59,20 @@
 
 ---
 
+## 2.5주차 — TypeScript 전환
+
+- [x] refactor: TypeScript 전환 (server + client)
+  - [x] server: `typescript`, `tsx`, `@types/node`, `@types/express`, `@types/cors` 설치
+  - [x] server: `tsconfig.json` 작성
+  - [x] server: `.js` → `.ts` 파일 확장자 변경 (22개)
+  - [x] server: 타입 어노테이션 추가 (모델 인터페이스, 서비스, 레포지토리, 라우터)
+  - [x] server: `package.json` 스크립트 수정 (`tsx` 실행)
+  - [x] client: `typescript`, `@types/react`, `@types/react-dom` 설치
+  - [x] client: `tsconfig.json` 작성
+  - [x] client: `.jsx` → `.tsx` 파일 확장자 변경
+
+---
+
 ## 3주차 — 프론트엔드 + 배포
 
 - [ ] feature/7: 공통 UI 세팅 및 라우팅
@@ -114,4 +128,4 @@
   - [ ] MongoDB Atlas Network Access 설정 (0.0.0.0/0)
   - [ ] 환경변수 전체 점검 (OPENAI_API_KEY, OPENAI_MODEL, MONGODB_URI 등)
   - [ ] 환경변수 `OPENAI_MODEL`로 gpt-4o-mini ↔ gpt-4o 전환 확인
-  - [ ] dev → main PR 생성 후 배포 확인
+  - [ ] 배포 확인
