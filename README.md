@@ -25,10 +25,11 @@
 
 | 구분 | 선택 |
 |---|---|
-| Frontend | React + Vite |
+| Frontend | React + Vite + **TypeScript** |
+| Styling | Tailwind CSS v3 |
 | Routing | React Router v6 |
-| Backend | Node.js + Express |
-| DB | MongoDB Atlas |
+| Backend | Node.js + Express + **TypeScript** |
+| DB | MongoDB Atlas (Mongoose) |
 | AI | OpenAI API (`gpt-4o-mini` / `gpt-4o`) |
 | 배포 | Vercel (FE) + Render (BE) |
 
@@ -144,13 +145,13 @@ npm run dev
 ```
 main       ← 배포용
   └── dev  ← 개발 통합
-        ├── feature/1-student-crud
-        ├── feature/2-openai-analyze
-        └── feature/3-consultation-record
+        ├── feature/이슈번호-기능명
+        └── refactor/기능명
 ```
 
-- 기능 하나 = `feature/이슈번호-기능명` 브랜치
-- `feature/*` → `dev` PR 후 머지
+- 기능 개발: `feature/이슈번호-기능명` 브랜치
+- 리팩토링: `refactor/기능명` 브랜치
+- `feature/*`, `refactor/*` → `dev` PR 후 머지
 - 배포 시점에 `dev` → `main` PR 후 머지
 
 ---
@@ -158,5 +159,5 @@ main       ← 배포용
 ## Task 관리
 
 - GitHub Issue로 기능 단위 Task 등록
-- 라벨: `feature` / `bug` / `docs`
-- 브랜치 이름에 이슈 번호 포함
+- 라벨: `feature` / `bug` / `docs` / `infra`
+- feature 브랜치는 이슈 번호 포함, refactor 브랜치는 이슈 번호 없이 기능명만
