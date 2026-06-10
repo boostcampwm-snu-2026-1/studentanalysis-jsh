@@ -75,7 +75,7 @@
 
 ## 3주차 — 프론트엔드 + 배포
 
-- [ ] feature/7: 공통 UI 세팅 및 라우팅
+- [x] feature/7: 공통 UI 세팅 및 라우팅
   - [x] React Router v6 라우팅 구성 (/, /students, /students/new, /students/:id)
   - [x] 공통 레이아웃 컴포넌트 (Header, Layout)
   - [x] API 클라이언트 모듈 세팅 (fetch 래퍼, baseURL, 에러 핸들링)
