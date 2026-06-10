@@ -85,6 +85,9 @@ studentanalysis-jsh/
 - studentId는 unique. Service에서 생성하며 중복 시 400 응답
 - 유효성 검사 범위: grade 1–3, classNum 1–9, number 1–99
 
+### 금지 패턴 (client)
+- API 호출은 반드시 `src/api/client.ts`의 axios 인스턴스를 사용한다. 컴포넌트나 훅에서 직접 `fetch` 또는 `axios`를 import하면 에러 핸들링이 누락된다
+
 ### 금지 패턴 (server)
 - Service에서 에러를 던질 때 반드시 `throw { status, message } as AppError` 형태로 던진다. errorHandler가 `err.status`, `err.message`를 읽기 때문에, 다른 형태로 던지면 500 에러가 발생한다
 - 라우터에서 `req.params` 값에 접근할 때 반드시 `req.params['key'] as string`으로 캐스팅한다. `@types/express@5`에서 `req.params` 값이 `string | string[]`로 타이핑되기 때문에 `string`을 기대하는 서비스 함수에 그대로 전달하면 타입 에러가 발생한다
