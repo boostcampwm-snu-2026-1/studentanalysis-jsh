@@ -158,6 +158,62 @@ export default function StudentDetailPage() {
       ]
     : []
 
+  const gradesTable = (() => {
+    const grades = student?.grades
+    if (!grades || grades.length === 0) return null
+    const sorted = [...grades].sort((a, b) => a.year - b.year || a.semester - b.semester)
+    const byYear = sorted.reduce<Record<number, typeof sorted>>((acc, g) => {
+      ;(acc[g.year] ??= []).push(g)
+      return acc
+    }, {})
+    return (
+      <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8">
+        <h3 className="mb-6 text-sm font-semibold text-on-surface">내신 성적</h3>
+        <div className="flex flex-col gap-6">
+          {Object.entries(byYear).map(([year, entries]) => {
+            const subjectCols = [...new Set(entries.flatMap(g => g.subjects.map(s => s.name)))]
+            return (
+              <div key={year}>
+                <p className="mb-3 text-xs font-semibold text-on-surface-variant">{year}학년</p>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-outline-variant">
+                        <th className="pb-3 pr-4 text-left text-xs font-semibold text-on-surface-variant whitespace-nowrap">학기</th>
+                        {subjectCols.map(col => (
+                          <th key={col} className="pb-3 px-3 text-center text-xs font-semibold text-on-surface-variant whitespace-nowrap">{col}</th>
+                        ))}
+                        <th className="pb-3 pl-4 text-center text-xs font-semibold text-on-surface-variant whitespace-nowrap">평균</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {entries.map(g => {
+                        const gradeMap = Object.fromEntries(g.subjects.map(s => [s.name, s.grade]))
+                        return (
+                          <tr key={g.semester} className="border-b border-outline-variant last:border-0">
+                            <td className="py-3 pr-4 text-xs text-on-surface-variant whitespace-nowrap">{g.semester}학기</td>
+                            {subjectCols.map(col => (
+                              <td key={col} className="py-3 px-3 text-center text-sm text-on-surface">
+                                {gradeMap[col] != null ? `${gradeMap[col]}등급` : '—'}
+                              </td>
+                            ))}
+                            <td className="py-3 pl-4 text-center text-sm font-semibold text-on-surface">
+                              {g.avgGrade != null ? `${g.avgGrade}등급` : '—'}
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  })()
+
   const basicInfoContent = loading ? (
     <div className="space-y-4">
       {[1, 2, 3].map(i => (
@@ -167,16 +223,19 @@ export default function StudentDetailPage() {
   ) : error ? (
     <p className="text-sm text-error">{error}</p>
   ) : (
-    <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8">
-      <h3 className="mb-6 text-sm font-semibold text-on-surface">인적 사항</h3>
-      <dl className="grid grid-cols-2 gap-x-8 gap-y-5">
-        {infoRows.map(({ label, value }) => (
-          <div key={label}>
-            <dt className="text-xs text-on-surface-variant">{label}</dt>
-            <dd className="mt-1 text-sm text-on-surface">{value}</dd>
-          </div>
-        ))}
-      </dl>
+    <div className="flex flex-col gap-6">
+      <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8">
+        <h3 className="mb-6 text-sm font-semibold text-on-surface">인적 사항</h3>
+        <dl className="grid grid-cols-2 gap-x-8 gap-y-5">
+          {infoRows.map(({ label, value }) => (
+            <div key={label}>
+              <dt className="text-xs text-on-surface-variant">{label}</dt>
+              <dd className="mt-1 text-sm text-on-surface">{value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      {gradesTable}
     </div>
   )
 
