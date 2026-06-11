@@ -26,6 +26,13 @@ interface GradesSectionProps {
 const labelClass = 'text-xs font-semibold tracking-wide text-on-surface-variant uppercase'
 const selectClass = 'bg-transparent text-on-surface text-sm py-2 border-b border-outline outline-none cursor-pointer'
 
+const calcAvg = (subjects: { grade: string }[]): string => {
+  const valid = subjects.filter(s => s.grade !== '')
+  if (valid.length === 0) return '—'
+  const sum = valid.reduce((acc, s) => acc + Number(s.grade), 0)
+  return (Math.round((sum / valid.length) * 10) / 10).toFixed(1)
+}
+
 export default function GradesSection({ existingGrades, value, onChange }: GradesSectionProps) {
   const updateEntry = (i: number, entry: GradeEntry) =>
     onChange(value.map((e, idx) => (idx === i ? entry : e)))
@@ -141,15 +148,37 @@ export default function GradesSection({ existingGrades, value, onChange }: Grade
             </div>
           )}
 
-          <button
-            type="button"
-            onClick={() => addRow(i)}
-            className="text-sm text-primary hover:opacity-80 transition-opacity text-left"
-          >
-            + 과목 추가
-          </button>
+          <div className="flex items-center justify-between">
+            <button
+              type="button"
+              onClick={() => addRow(i)}
+              className="text-sm text-primary hover:opacity-80 transition-opacity"
+            >
+              + 과목 추가
+            </button>
+            <span className="text-xs text-on-surface-variant">
+              이 학기 평균:{' '}
+              {(() => {
+                const avg = calcAvg(entry.subjects)
+                return <span className="font-semibold text-on-surface">{avg === '—' ? '—' : `${avg}등급`}</span>
+              })()}
+            </span>
+          </div>
         </div>
       ))}
+
+      {value.length > 0 && (() => {
+        const allSubjects = value.flatMap(e => e.subjects)
+        const overall = calcAvg(allSubjects)
+        return (
+          <div className="flex justify-end text-xs text-on-surface-variant">
+            전체 평균:{' '}
+            <span className="ml-1 font-semibold text-on-surface">
+              {overall === '—' ? '—' : `${overall}등급`}
+            </span>
+          </div>
+        )
+      })()}
 
       <button
         type="button"
