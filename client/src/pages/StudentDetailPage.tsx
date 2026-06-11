@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useParams, useSearchParams, useNavigate, useLocation } from 'react-router-dom'
 import Tabs from '../components/Tabs'
 import Modal from '../components/Modal'
@@ -17,6 +17,19 @@ const TAB_LABELS: Record<TabKey, string> = {
   analysis: '생기부 분석',
   consultation: '상담 기록',
   university: '대학 탐색',
+}
+
+interface Analysis {
+  _id: string
+  inputText: string
+  result: {
+    competencyProfile: unknown
+    diagnosis: unknown
+    activityA: unknown
+    activityB: unknown
+    narrative: unknown
+  }
+  createdAt: string
 }
 
 interface EditForm {
@@ -43,11 +56,52 @@ export default function StudentDetailPage() {
   const [gradesEntries, setGradesEntries] = useState<GradeEntry[]>([])
   const [mockExamEntries, setMockExamEntries] = useState<MockExamEntry[]>([])
 
+  const [analysisHistory, setAnalysisHistory] = useState<Analysis[]>([])
+  const [analysisLoading, setAnalysisLoading] = useState(false)
+  const [analysisFetched, setAnalysisFetched] = useState(false)
+  const [inputText, setInputText] = useState('')
+  const [analyzing, setAnalyzing] = useState(false)
+  const [analyzeError, setAnalyzeError] = useState<string | null>(null)
+  const [showInputArea, setShowInputArea] = useState(false)
+
+  const fetchAnalysis = useCallback(async () => {
+    setAnalysisLoading(true)
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const res = await client.get(`/api/students/${studentId}/analysis`) as any
+      setAnalysisHistory(res.data ?? [])
+    } finally {
+      setAnalysisLoading(false)
+      setAnalysisFetched(true)
+    }
+  }, [studentId])
+
   const rawTab = searchParams.get('tab')
   const activeTab: TabKey = TAB_KEYS.includes(rawTab as TabKey) ? (rawTab as TabKey) : 'basic'
 
+  useEffect(() => {
+    if (activeTab === 'analysis' && !analysisFetched) fetchAnalysis()
+  }, [activeTab, analysisFetched, fetchAnalysis])
+
   const handleTabChange = (key: string) => {
     navigate({ pathname, search: `?tab=${key}` }, { replace: true })
+  }
+
+  const handleAnalyze = async () => {
+    if (!inputText.trim()) return
+    setAnalyzing(true)
+    setAnalyzeError(null)
+    try {
+      await client.post(`/api/students/${studentId}/analyze`, { inputText })
+      setShowInputArea(false)
+      setInputText('')
+      setAnalysisFetched(false)
+      await fetchAnalysis()
+    } catch (err) {
+      setAnalyzeError((err as Error).message)
+    } finally {
+      setAnalyzing(false)
+    }
   }
 
   const handleOpenEdit = () => {
@@ -279,11 +333,50 @@ export default function StudentDetailPage() {
     </div>
   )
 
+  const inputArea = (
+    <div className="flex flex-col gap-4">
+      <textarea
+        value={inputText}
+        onChange={e => setInputText(e.target.value)}
+        placeholder="생기부 원문을 붙여넣어 주세요"
+        rows={16}
+        className="w-full rounded border border-outline-variant bg-surface-container-lowest p-4 text-sm text-on-surface outline-none focus:border-primary resize-none"
+      />
+      {analyzeError && <p className="text-xs text-error">{analyzeError}</p>}
+      <div className="flex justify-end">
+        <Button onClick={handleAnalyze} disabled={analyzing || !inputText.trim()}>
+          {analyzing ? '분석 중...' : '분석 시작'}
+        </Button>
+      </div>
+    </div>
+  )
+
+  const analysisContent = analysisLoading ? (
+    <div className="space-y-4">
+      {[1, 2, 3].map(i => (
+        <div key={i} className="h-6 w-full rounded bg-surface-container-high animate-pulse" />
+      ))}
+    </div>
+  ) : analysisHistory.length === 0 ? (
+    inputArea
+  ) : (
+    <div className="flex flex-col gap-6">
+      <div className="flex justify-end">
+        <Button variant="secondary" onClick={() => setShowInputArea(v => !v)}>
+          {showInputArea ? '취소' : '재분석'}
+        </Button>
+      </div>
+      {showInputArea && inputArea}
+      <div className="text-sm text-on-surface-variant">분석 결과 준비 중</div>
+    </div>
+  )
+
   const tabs = TAB_KEYS.map(key => ({
     key,
     label: TAB_LABELS[key],
     content:
-      key === 'basic' ? basicInfoContent : (
+      key === 'basic' ? basicInfoContent :
+      key === 'analysis' ? analysisContent : (
         <div className="text-sm text-on-surface-variant">{TAB_LABELS[key]} 준비 중</div>
       ),
   }))
