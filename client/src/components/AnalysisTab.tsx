@@ -3,6 +3,7 @@ import Button from './Button'
 import CompetencyProfileCard, { CompetencyProfile } from './CompetencyProfileCard'
 import DiagnosisCard, { Diagnosis } from './DiagnosisCard'
 import ActivityItemCard, { ActivityItem } from './ActivityItemCard'
+import NarrativeCard, { Narrative } from './NarrativeCard'
 import client from '../api/client'
 
 interface ActivityResult {
@@ -20,7 +21,7 @@ interface Analysis {
     diagnosis: Diagnosis | null
     activityA: ActivityResult | null
     activityB: ActivityResult | null
-    narrative: unknown
+    narrative: Narrative | null
   }
   createdAt: string
 }
@@ -225,6 +226,13 @@ export default function AnalysisTab({ studentId }: Props) {
         ) : (
           <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8 text-sm text-on-surface-variant">
             활동 추천 B 분석 결과가 없습니다.
+          </div>
+        )}
+        {latest.result.narrative ? (
+          <NarrativeCard data={latest.result.narrative} />
+        ) : (
+          <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8 text-sm text-on-surface-variant">
+            서사 설계 분석 결과가 없습니다.
           </div>
         )}
       </div>
