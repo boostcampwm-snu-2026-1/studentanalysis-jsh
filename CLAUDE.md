@@ -46,7 +46,7 @@ studentanalysis-jsh/
 - models: Mongoose 스키마 정의만
 
 ### 환경변수
-- server: `dotenv`로 `server/.env` 로드. `MONGODB_URI`, `OPENAI_API_KEY`, `OPENAI_MODEL`, `PORT`
+- server: `dotenv`로 `server/.env` 로드. `MONGODB_URI`, `GEMINI_API_KEY`, `OPENAI_MODEL`, `PORT`
 - client: Vite 내장. `VITE_` 접두사 변수만 브라우저에 노출됨. `VITE_API_BASE_URL`
 - **API 키는 절대 client `.env`에 넣지 않는다**
 

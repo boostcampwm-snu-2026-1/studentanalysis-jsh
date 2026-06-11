@@ -8,15 +8,17 @@ import * as activityBPrompt from '../prompts/activityB'
 import * as narrativePrompt from '../prompts/narrative'
 import { AppError, PromptModule, PromptInput } from '../types'
 
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
 async function callOpenAI(
   promptModule: PromptModule,
   inputData: PromptInput,
-  retries = 1
+  retries = 2
 ): Promise<Record<string, unknown>> {
   try {
     const messages = promptModule.buildMessages(inputData)
     const res = await openai.chat.completions.create({
-      model: process.env.OPENAI_MODEL ?? 'gpt-4o-mini',
+      model: process.env.OPENAI_MODEL ?? 'gemini-2.0-flash',
       messages: messages as Parameters<typeof openai.chat.completions.create>[0]['messages'],
       max_tokens: promptModule.maxTokens,
     })
@@ -28,7 +30,11 @@ async function callOpenAI(
       throw { status: 500, message: `분석 결과에 필수 키가 누락됐습니다: ${missing.join(', ')}` } as AppError
     return parsed
   } catch (err) {
-    if (retries > 0) return callOpenAI(promptModule, inputData, retries - 1)
+    const error = err as { status?: number }
+    if (retries > 0) {
+      if (error.status === 429) await sleep(15000)
+      return callOpenAI(promptModule, inputData, retries - 1)
+    }
     throw err
   }
 }
@@ -48,13 +54,11 @@ async function runAndSave(studentId: string, inputText: string) {
   if (!student) throw { status: 404, message: '학생을 찾을 수 없습니다.' } as AppError
 
   const inputData: PromptInput = { inputText, grades: student.grades, mockExams: student.mockExams }
-  const [competencyProfile, diagnosis, activityA, activityB, narrative] = await Promise.all([
-    callOpenAI(competencyProfilePrompt, inputData),
-    callOpenAI(diagnosisPrompt, inputData),
-    callOpenAI(activityAPrompt, inputData),
-    callOpenAI(activityBPrompt, inputData),
-    callOpenAI(narrativePrompt, inputData),
-  ])
+  const competencyProfile = await callOpenAI(competencyProfilePrompt, inputData)
+  const diagnosis = await callOpenAI(diagnosisPrompt, inputData)
+  const activityA = await callOpenAI(activityAPrompt, inputData)
+  const activityB = await callOpenAI(activityBPrompt, inputData)
+  const narrative = await callOpenAI(narrativePrompt, inputData)
   const result = { competencyProfile, diagnosis, activityA, activityB, narrative }
   return analysisRepository.create({ studentId, inputText, result })
 }
