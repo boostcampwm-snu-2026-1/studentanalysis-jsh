@@ -19,6 +19,8 @@ const TAB_LABELS: Record<TabKey, string> = {
   university: '대학 탐색',
 }
 
+const ANALYSIS_STEPS = ['역량 프로필', '종합 진단', '활동 추천 A', '활동 추천 B', '서사 설계'] as const
+
 interface Analysis {
   _id: string
   inputText: string
@@ -63,6 +65,7 @@ export default function StudentDetailPage() {
   const [analyzing, setAnalyzing] = useState(false)
   const [analyzeError, setAnalyzeError] = useState<string | null>(null)
   const [showInputArea, setShowInputArea] = useState(false)
+  const [activeStep, setActiveStep] = useState(0)
 
   const fetchAnalysis = useCallback(async () => {
     setAnalysisLoading(true)
@@ -82,6 +85,18 @@ export default function StudentDetailPage() {
   useEffect(() => {
     if (activeTab === 'analysis' && !analysisFetched) fetchAnalysis()
   }, [activeTab, analysisFetched, fetchAnalysis])
+
+  useEffect(() => {
+    if (!analyzing) {
+      setActiveStep(0)
+      return
+    }
+    setActiveStep(0)
+    const interval = setInterval(() => {
+      setActiveStep(prev => (prev < ANALYSIS_STEPS.length - 1 ? prev + 1 : prev))
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [analyzing])
 
   const handleTabChange = (key: string) => {
     navigate({ pathname, search: `?tab=${key}` }, { replace: true })
@@ -351,7 +366,43 @@ export default function StudentDetailPage() {
     </div>
   )
 
-  const analysisContent = analysisLoading ? (
+  const progressUI = (
+    <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8">
+      <p className="mb-8 text-sm font-semibold text-on-surface">분석 중...</p>
+      <ol className="flex flex-col gap-6">
+        {ANALYSIS_STEPS.map((step, i) => {
+          const done = i < activeStep
+          const active = i === activeStep
+          return (
+            <li key={step} className="flex items-center gap-4">
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                done
+                  ? 'bg-primary'
+                  : active
+                  ? 'border-2 border-primary'
+                  : 'border-2 border-outline-variant'
+              }`}>
+                {done ? (
+                  <svg className="w-4 h-4 text-on-primary" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8l3.5 3.5L13 4.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                ) : active ? (
+                  <div className="w-4 h-4 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+                ) : null}
+              </div>
+              <span className={`text-sm ${done || active ? 'text-on-surface font-medium' : 'text-on-surface-variant'}`}>
+                {step}
+              </span>
+            </li>
+          )
+        })}
+      </ol>
+    </div>
+  )
+
+  const analysisContent = analyzing ? (
+    progressUI
+  ) : analysisLoading ? (
     <div className="space-y-4">
       {[1, 2, 3].map(i => (
         <div key={i} className="h-6 w-full rounded bg-surface-container-high animate-pulse" />
