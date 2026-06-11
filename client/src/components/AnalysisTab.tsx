@@ -2,7 +2,15 @@ import { useState, useEffect, useCallback } from 'react'
 import Button from './Button'
 import CompetencyProfileCard, { CompetencyProfile } from './CompetencyProfileCard'
 import DiagnosisCard, { Diagnosis } from './DiagnosisCard'
+import ActivityItemCard, { ActivityItem } from './ActivityItemCard'
 import client from '../api/client'
+
+interface ActivityResult {
+  stable?: ActivityItem
+  intensive?: ActivityItem
+  differentiated?: ActivityItem
+  practical?: ActivityItem
+}
 
 interface Analysis {
   _id: string
@@ -10,8 +18,8 @@ interface Analysis {
   result: {
     competencyProfile: CompetencyProfile | null
     diagnosis: Diagnosis | null
-    activityA: unknown
-    activityB: unknown
+    activityA: ActivityResult | null
+    activityB: ActivityResult | null
     narrative: unknown
   }
   createdAt: string
@@ -174,6 +182,49 @@ export default function AnalysisTab({ studentId }: Props) {
         ) : (
           <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8 text-sm text-on-surface-variant">
             종합 진단 분석 결과가 없습니다.
+          </div>
+        )}
+        {latest.result.activityA ? (
+          <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8">
+            <h3 className="mb-6 text-base font-semibold text-on-surface">활동 추천 A</h3>
+            <div className="grid grid-cols-2 divide-x divide-outline-variant gap-0">
+              <div className="pr-8">
+                {latest.result.activityA.stable && (
+                  <ActivityItemCard label="안정형 활동" data={latest.result.activityA.stable} />
+                )}
+              </div>
+              <div className="pl-8">
+                {latest.result.activityA.intensive && (
+                  <ActivityItemCard label="심화형 활동" data={latest.result.activityA.intensive} />
+                )}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8 text-sm text-on-surface-variant">
+            활동 추천 A 분석 결과가 없습니다.
+          </div>
+        )}
+        {latest.result.activityB ? (
+          <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8">
+            <h3 className="mb-6 text-base font-semibold text-on-surface">활동 추천 B</h3>
+            <div className="grid grid-cols-2 divide-x divide-outline-variant gap-0">
+              <div className="pr-8">
+                {latest.result.activityB.differentiated && (
+                  <ActivityItemCard label="차별화형 활동" data={latest.result.activityB.differentiated} />
+
+                )}
+              </div>
+              <div className="pl-8">
+                {latest.result.activityB.practical && (
+                  <ActivityItemCard label="실천형 활동" data={latest.result.activityB.practical} />
+                )}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8 text-sm text-on-surface-variant">
+            활동 추천 B 분석 결과가 없습니다.
           </div>
         )}
       </div>
