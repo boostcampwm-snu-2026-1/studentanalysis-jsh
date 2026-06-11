@@ -8,6 +8,7 @@ import GradesSection, { GradeEntry } from '../components/GradesSection'
 import MockExamSection, { MockExamEntry } from '../components/MockExamSection'
 import useStudent from '../hooks/useStudent'
 import client from '../api/client'
+import CompetencyProfileCard, { CompetencyProfile } from '../components/CompetencyProfileCard'
 
 const TAB_KEYS = ['basic', 'analysis', 'consultation', 'university'] as const
 type TabKey = (typeof TAB_KEYS)[number]
@@ -25,7 +26,7 @@ interface Analysis {
   _id: string
   inputText: string
   result: {
-    competencyProfile: unknown
+    competencyProfile: CompetencyProfile | null
     diagnosis: unknown
     activityA: unknown
     activityB: unknown
@@ -434,7 +435,15 @@ export default function StudentDetailPage() {
         </Button>
       </div>
       {showInputArea && inputArea}
-      <div className="text-sm text-on-surface-variant">분석 결과 준비 중</div>
+      <div className="flex flex-col gap-6">
+        {analysisHistory[0].result.competencyProfile ? (
+          <CompetencyProfileCard data={analysisHistory[0].result.competencyProfile} />
+        ) : (
+          <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8 text-sm text-on-surface-variant">
+            역량 프로필 분석 결과가 없습니다.
+          </div>
+        )}
+      </div>
     </div>
   )
 

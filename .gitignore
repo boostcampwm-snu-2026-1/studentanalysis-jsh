@@ -6,3 +6,4 @@ dist/
 # 더미 데이터
 dummy-*.json
 dummy-*.md
+server/seed.ts
