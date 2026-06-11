@@ -1,32 +1,15 @@
 import { useState, useEffect, useCallback } from 'react'
 import Button from './Button'
-import CompetencyProfileCard, { CompetencyProfile } from './CompetencyProfileCard'
-import DiagnosisCard, { Diagnosis } from './DiagnosisCard'
-import ActivityItemCard, { ActivityItem } from './ActivityItemCard'
-import NarrativeCard, { Narrative } from './NarrativeCard'
+import AnalysisProgress, { ANALYSIS_STEPS } from './AnalysisProgress'
+import AnalysisResults, { AnalysisResult } from './AnalysisResults'
 import client from '../api/client'
-
-interface ActivityResult {
-  stable?: ActivityItem
-  intensive?: ActivityItem
-  differentiated?: ActivityItem
-  practical?: ActivityItem
-}
 
 interface Analysis {
   _id: string
   inputText: string
-  result: {
-    competencyProfile: CompetencyProfile | null
-    diagnosis: Diagnosis | null
-    activityA: ActivityResult | null
-    activityB: ActivityResult | null
-    narrative: Narrative | null
-  }
+  result: AnalysisResult
   createdAt: string
 }
-
-const ANALYSIS_STEPS = ['역량 프로필', '종합 진단', '활동 추천 A', '활동 추천 B', '서사 설계'] as const
 
 interface Props {
   studentId: string
@@ -41,6 +24,7 @@ export default function AnalysisTab({ studentId }: Props) {
   const [analyzeError, setAnalyzeError] = useState<string | null>(null)
   const [showInputArea, setShowInputArea] = useState(false)
   const [activeStep, setActiveStep] = useState(0)
+  const [selectedIndex, setSelectedIndex] = useState(0)
 
   const fetchAnalysis = useCallback(async () => {
     setAnalysisLoading(true)
@@ -75,6 +59,7 @@ export default function AnalysisTab({ studentId }: Props) {
       await client.post(`/api/students/${studentId}/analyze`, { inputText })
       setShowInputArea(false)
       setInputText('')
+      setSelectedIndex(0)
       setAnalysisFetched(false)
     } catch (err) {
       setAnalyzeError((err as Error).message)
@@ -101,54 +86,14 @@ export default function AnalysisTab({ studentId }: Props) {
     </div>
   )
 
-  const progressUI = (
-    <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8">
-      <p className="mb-8 text-sm font-semibold text-on-surface">
-        {analyzeError ? '분석 실패' : '분석 중...'}
-      </p>
-      <ol className="flex flex-col gap-6">
-        {ANALYSIS_STEPS.map((step, i) => {
-          const done = i < activeStep
-          const failed = !!analyzeError && i === activeStep
-          const active = !analyzeError && i === activeStep
-          return (
-            <li key={step} className="flex items-center gap-4">
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                done ? 'bg-primary' : failed ? 'bg-error' : active ? 'border-2 border-primary' : 'border-2 border-outline-variant'
-              }`}>
-                {done ? (
-                  <svg className="w-4 h-4 text-on-primary" viewBox="0 0 16 16" fill="none">
-                    <path d="M3 8l3.5 3.5L13 4.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                ) : failed ? (
-                  <svg className="w-4 h-4 text-on-error" viewBox="0 0 16 16" fill="none">
-                    <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                ) : active ? (
-                  <div className="w-4 h-4 rounded-full border-2 border-primary border-t-transparent animate-spin" />
-                ) : null}
-              </div>
-              <span className={`text-sm ${
-                failed ? 'text-error font-medium' : done || active ? 'text-on-surface font-medium' : 'text-on-surface-variant'
-              }`}>
-                {step}
-              </span>
-            </li>
-          )
-        })}
-      </ol>
-      {analyzeError && (
-        <div className="mt-8 flex flex-col gap-3">
-          <p className="text-xs text-error">{analyzeError}</p>
-          <div className="flex justify-end">
-            <Button onClick={handleAnalyze} disabled={!inputText.trim()}>다시 분석</Button>
-          </div>
-        </div>
-      )}
-    </div>
+  if (analyzing || !!analyzeError) return (
+    <AnalysisProgress
+      activeStep={activeStep}
+      error={analyzeError}
+      onRetry={handleAnalyze}
+      retryDisabled={!inputText.trim()}
+    />
   )
-
-  if (analyzing || !!analyzeError) return progressUI
 
   if (analysisLoading) return (
     <div className="space-y-4">
@@ -160,82 +105,40 @@ export default function AnalysisTab({ studentId }: Props) {
 
   if (analysisHistory.length === 0) return inputArea
 
-  const latest = analysisHistory[0]
+  const latest = analysisHistory[selectedIndex]
+
+  const fmtDate = (iso: string) => {
+    const d = new Date(iso)
+    return `${d.getFullYear()}. ${String(d.getMonth() + 1).padStart(2, '0')}. ${String(d.getDate()).padStart(2, '0')}. ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`
+  }
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex justify-end">
+      <div className="flex items-center justify-end gap-3">
+        {analysisHistory.length > 1 && (
+          <div className="relative">
+            <select
+              value={selectedIndex}
+              onChange={e => setSelectedIndex(Number(e.target.value))}
+              className="appearance-none rounded border border-primary bg-transparent pl-4 pr-10 py-4 text-sm font-semibold text-primary outline-none cursor-pointer"
+            >
+              {analysisHistory.map((a, i) => (
+                <option key={a._id} value={i}>
+                  {fmtDate(a.createdAt)}{i === 0 ? ' (최신)' : ''}
+                </option>
+              ))}
+            </select>
+            <svg className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" viewBox="0 0 16 16" fill="none">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+        )}
         <Button variant="secondary" onClick={() => setShowInputArea(v => !v)}>
           {showInputArea ? '취소' : '재분석'}
         </Button>
       </div>
       {showInputArea && inputArea}
-      <div className="flex flex-col gap-6">
-        {latest.result.competencyProfile ? (
-          <CompetencyProfileCard data={latest.result.competencyProfile} />
-        ) : (
-          <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8 text-sm text-on-surface-variant">
-            역량 프로필 분석 결과가 없습니다.
-          </div>
-        )}
-        {latest.result.diagnosis ? (
-          <DiagnosisCard data={latest.result.diagnosis} />
-        ) : (
-          <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8 text-sm text-on-surface-variant">
-            종합 진단 분석 결과가 없습니다.
-          </div>
-        )}
-        {latest.result.activityA ? (
-          <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8">
-            <h3 className="mb-6 text-base font-semibold text-on-surface">활동 추천 A</h3>
-            <div className="grid grid-cols-2 divide-x divide-outline-variant gap-0">
-              <div className="pr-8">
-                {latest.result.activityA.stable && (
-                  <ActivityItemCard label="안정형 활동" data={latest.result.activityA.stable} />
-                )}
-              </div>
-              <div className="pl-8">
-                {latest.result.activityA.intensive && (
-                  <ActivityItemCard label="심화형 활동" data={latest.result.activityA.intensive} />
-                )}
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8 text-sm text-on-surface-variant">
-            활동 추천 A 분석 결과가 없습니다.
-          </div>
-        )}
-        {latest.result.activityB ? (
-          <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8">
-            <h3 className="mb-6 text-base font-semibold text-on-surface">활동 추천 B</h3>
-            <div className="grid grid-cols-2 divide-x divide-outline-variant gap-0">
-              <div className="pr-8">
-                {latest.result.activityB.differentiated && (
-                  <ActivityItemCard label="차별화형 활동" data={latest.result.activityB.differentiated} />
-
-                )}
-              </div>
-              <div className="pl-8">
-                {latest.result.activityB.practical && (
-                  <ActivityItemCard label="실천형 활동" data={latest.result.activityB.practical} />
-                )}
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8 text-sm text-on-surface-variant">
-            활동 추천 B 분석 결과가 없습니다.
-          </div>
-        )}
-        {latest.result.narrative ? (
-          <NarrativeCard data={latest.result.narrative} />
-        ) : (
-          <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8 text-sm text-on-surface-variant">
-            서사 설계 분석 결과가 없습니다.
-          </div>
-        )}
-      </div>
+      <AnalysisResults result={latest.result} />
     </div>
   )
 }
