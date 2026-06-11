@@ -10,6 +10,22 @@ export interface Grade {
   year: number
   semester: number
   subjects: GradeSubject[]
+  avgGrade?: number
+}
+
+export interface MockExamSubject {
+  grade?: number
+  percentile?: number
+}
+
+export interface MockExam {
+  year: number
+  month: number
+  kor: MockExamSubject
+  math: MockExamSubject
+  eng: { grade?: number }
+  exp1: MockExamSubject
+  exp2: MockExamSubject
 }
 
 export interface Student {
@@ -21,6 +37,7 @@ export interface Student {
   targetUniv: string
   targetMajor: string
   grades: Grade[]
+  mockExams: MockExam[]
 }
 
 interface UseStudentsResult {

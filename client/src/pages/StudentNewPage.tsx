@@ -4,6 +4,7 @@ import client from '../api/client'
 import Input from '../components/Input'
 import Button from '../components/Button'
 import GradesSection, { GradeEntry } from '../components/GradesSection'
+import MockExamSection, { MockExamEntry } from '../components/MockExamSection'
 
 interface FormState {
   name: string
@@ -45,6 +46,7 @@ export default function StudentNewPage() {
   const [serverError, setServerError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [gradesEntries, setGradesEntries] = useState<GradeEntry[]>([])
+  const [mockExamEntries, setMockExamEntries] = useState<MockExamEntry[]>([])
 
   const handleChange = (field: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm(prev => ({ ...prev, [field]: e.target.value }))
@@ -80,6 +82,19 @@ export default function StudentNewPage() {
           })
         }
       }
+      for (const entry of mockExamEntries) {
+        if (!entry.year || !entry.month) continue
+        const toNum = (v: string) => (v !== '' ? Number(v) : undefined)
+        await client.put(`/api/students/${studentId}/mock-exams`, {
+          year: Number(entry.year),
+          month: Number(entry.month),
+          kor: { grade: toNum(entry.kor.grade), percentile: toNum(entry.kor.percentile) },
+          math: { grade: toNum(entry.math.grade), percentile: toNum(entry.math.percentile) },
+          eng: { grade: toNum(entry.eng.grade) },
+          exp1: { grade: toNum(entry.exp1.grade), percentile: toNum(entry.exp1.percentile) },
+          exp2: { grade: toNum(entry.exp2.grade), percentile: toNum(entry.exp2.percentile) },
+        })
+      }
       navigate(`/students/${studentId}`)
     } catch (err) {
       setServerError((err as Error).message)
@@ -110,6 +125,15 @@ export default function StudentNewPage() {
               내신 입력 <span className="text-xs font-normal text-on-surface-variant">(선택)</span>
             </p>
             <GradesSection existingGrades={[]} value={gradesEntries} onChange={setGradesEntries} />
+          </div>
+
+          <hr className="border-outline-variant" />
+
+          <div>
+            <p className="text-sm font-semibold text-on-surface mb-4">
+              모의고사 입력 <span className="text-xs font-normal text-on-surface-variant">(선택)</span>
+            </p>
+            <MockExamSection existingMockExams={[]} value={mockExamEntries} onChange={setMockExamEntries} />
           </div>
         </div>
 

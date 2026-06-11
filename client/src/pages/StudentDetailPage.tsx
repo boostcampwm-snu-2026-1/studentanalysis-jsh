@@ -5,6 +5,7 @@ import Modal from '../components/Modal'
 import Button from '../components/Button'
 import Input from '../components/Input'
 import GradesSection, { GradeEntry } from '../components/GradesSection'
+import MockExamSection, { MockExamEntry } from '../components/MockExamSection'
 import useStudent from '../hooks/useStudent'
 import client from '../api/client'
 
@@ -40,6 +41,7 @@ export default function StudentDetailPage() {
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
   const [gradesEntries, setGradesEntries] = useState<GradeEntry[]>([])
+  const [mockExamEntries, setMockExamEntries] = useState<MockExamEntry[]>([])
 
   const rawTab = searchParams.get('tab')
   const activeTab: TabKey = TAB_KEYS.includes(rawTab as TabKey) ? (rawTab as TabKey) : 'basic'
@@ -63,6 +65,17 @@ export default function StudentDetailPage() {
         year: g.year,
         semester: g.semester,
         subjects: g.subjects.map(s => ({ name: s.name, grade: String(s.grade) })),
+      })) ?? []
+    )
+    setMockExamEntries(
+      student.mockExams?.map(e => ({
+        year: String(e.year),
+        month: String(e.month),
+        kor: { grade: String(e.kor?.grade ?? ''), percentile: String(e.kor?.percentile ?? '') },
+        math: { grade: String(e.math?.grade ?? ''), percentile: String(e.math?.percentile ?? '') },
+        eng: { grade: String(e.eng?.grade ?? '') },
+        exp1: { grade: String(e.exp1?.grade ?? ''), percentile: String(e.exp1?.percentile ?? '') },
+        exp2: { grade: String(e.exp2?.grade ?? ''), percentile: String(e.exp2?.percentile ?? '') },
       })) ?? []
     )
     setSaveError(null)
@@ -91,6 +104,19 @@ export default function StudentDetailPage() {
           })
         }
       }
+      for (const entry of mockExamEntries) {
+        if (!entry.year || !entry.month) continue
+        const toNum = (v: string) => (v !== '' ? Number(v) : undefined)
+        await client.put(`/api/students/${studentId}/mock-exams`, {
+          year: Number(entry.year),
+          month: Number(entry.month),
+          kor: { grade: toNum(entry.kor.grade), percentile: toNum(entry.kor.percentile) },
+          math: { grade: toNum(entry.math.grade), percentile: toNum(entry.math.percentile) },
+          eng: { grade: toNum(entry.eng.grade) },
+          exp1: { grade: toNum(entry.exp1.grade), percentile: toNum(entry.exp1.percentile) },
+          exp2: { grade: toNum(entry.exp2.grade), percentile: toNum(entry.exp2.percentile) },
+        })
+      }
       setIsEditOpen(false)
       refetch()
     } catch (err) {
@@ -103,6 +129,22 @@ export default function StudentDetailPage() {
   const setField = (field: keyof EditForm) => (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm(f => ({ ...f, [field]: e.target.value }))
 
+  const gradesAvg = (() => {
+    const avgs = student?.grades?.map(g => g.avgGrade).filter((v): v is number => v != null) ?? []
+    if (avgs.length === 0) return '—'
+    return (Math.round((avgs.reduce((a, b) => a + b, 0) / avgs.length) * 10) / 10).toFixed(1) + '등급'
+  })()
+
+  const mockAvg = (() => {
+    const exams = student?.mockExams ?? []
+    if (exams.length === 0) return '—'
+    const latest = [...exams].sort((a, b) => b.year - a.year || b.month - a.month)[0]
+    const grades = [latest.kor?.grade, latest.math?.grade, latest.eng?.grade, latest.exp1?.grade, latest.exp2?.grade]
+      .filter((v): v is number => v != null)
+    if (grades.length === 0) return '—'
+    return (Math.round((grades.reduce((a, b) => a + b, 0) / grades.length) * 10) / 10).toFixed(1) + '등급'
+  })()
+
   const infoRows = student
     ? [
         { label: '이름', value: student.name },
@@ -111,6 +153,8 @@ export default function StudentDetailPage() {
         { label: '번호', value: `${student.number}번` },
         { label: '목표 대학', value: student.targetUniv || '—' },
         { label: '목표 계열', value: student.targetMajor || '—' },
+        { label: '내신 평균', value: gradesAvg },
+        { label: '모의고사 평균 (최근)', value: mockAvg },
       ]
     : []
 
@@ -188,6 +232,17 @@ export default function StudentDetailPage() {
               existingGrades={student?.grades ?? []}
               value={gradesEntries}
               onChange={setGradesEntries}
+            />
+          </div>
+
+          <hr className="border-outline-variant" />
+
+          <div>
+            <p className="text-sm font-semibold text-on-surface mb-4">모의고사 수정</p>
+            <MockExamSection
+              existingMockExams={student?.mockExams ?? []}
+              value={mockExamEntries}
+              onChange={setMockExamEntries}
             />
           </div>
 
