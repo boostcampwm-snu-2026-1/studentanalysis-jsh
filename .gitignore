@@ -2,3 +2,7 @@ node_modules/
 dist/
 .env
 .env.local
+
+# 더미 데이터
+dummy-*.json
+dummy-*.md

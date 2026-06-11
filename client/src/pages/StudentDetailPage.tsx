@@ -4,6 +4,7 @@ import Tabs from '../components/Tabs'
 import Modal from '../components/Modal'
 import Button from '../components/Button'
 import Input from '../components/Input'
+import GradesSection, { GradeEntry } from '../components/GradesSection'
 import useStudent from '../hooks/useStudent'
 import client from '../api/client'
 
@@ -38,6 +39,7 @@ export default function StudentDetailPage() {
   const [form, setForm] = useState<EditForm>({ name: '', grade: '', classNum: '', number: '', targetUniv: '', targetMajor: '' })
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
+  const [gradesEntries, setGradesEntries] = useState<GradeEntry[]>([])
 
   const rawTab = searchParams.get('tab')
   const activeTab: TabKey = TAB_KEYS.includes(rawTab as TabKey) ? (rawTab as TabKey) : 'basic'
@@ -56,6 +58,13 @@ export default function StudentDetailPage() {
       targetUniv: student.targetUniv ?? '',
       targetMajor: student.targetMajor ?? '',
     })
+    setGradesEntries(
+      student.grades?.map(g => ({
+        year: g.year,
+        semester: g.semester,
+        subjects: g.subjects.map(s => ({ name: s.name, grade: String(s.grade) })),
+      })) ?? []
+    )
     setSaveError(null)
     setIsEditOpen(true)
   }
@@ -72,6 +81,16 @@ export default function StudentDetailPage() {
         targetUniv: form.targetUniv,
         targetMajor: form.targetMajor,
       })
+      for (const entry of gradesEntries) {
+        const validSubjects = entry.subjects.filter(s => s.name.trim())
+        if (validSubjects.length > 0) {
+          await client.put(`/api/students/${studentId}/grades`, {
+            year: entry.year,
+            semester: entry.semester,
+            subjects: validSubjects.map(s => ({ name: s.name.trim(), grade: Number(s.grade) })),
+          })
+        }
+      }
       setIsEditOpen(false)
       refetch()
     } catch (err) {
@@ -161,6 +180,17 @@ export default function StudentDetailPage() {
           </div>
           <Input label="목표 대학" value={form.targetUniv} onChange={setField('targetUniv')} />
           <Input label="목표 계열" value={form.targetMajor} onChange={setField('targetMajor')} />
+          <hr className="border-outline-variant" />
+
+          <div>
+            <p className="text-sm font-semibold text-on-surface mb-4">내신 수정</p>
+            <GradesSection
+              existingGrades={student?.grades ?? []}
+              value={gradesEntries}
+              onChange={setGradesEntries}
+            />
+          </div>
+
           {saveError && <p className="text-xs text-error">{saveError}</p>}
           <div className="flex justify-end pt-2">
             <Button onClick={handleSave} disabled={saving}>

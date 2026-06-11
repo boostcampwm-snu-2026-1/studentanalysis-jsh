@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import client from '../api/client'
 import Input from '../components/Input'
 import Button from '../components/Button'
+import GradesSection, { GradeEntry } from '../components/GradesSection'
 
 interface FormState {
   name: string
@@ -43,6 +44,7 @@ export default function StudentNewPage() {
   const [errors, setErrors] = useState<FormErrors>({})
   const [serverError, setServerError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
+  const [gradesEntries, setGradesEntries] = useState<GradeEntry[]>([])
 
   const handleChange = (field: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm(prev => ({ ...prev, [field]: e.target.value }))
@@ -68,6 +70,16 @@ export default function StudentNewPage() {
         targetMajor: form.targetMajor.trim(),
       })
       const studentId = (res as any).data?.studentId
+      for (const entry of gradesEntries) {
+        const validSubjects = entry.subjects.filter(s => s.name.trim())
+        if (validSubjects.length > 0) {
+          await client.put(`/api/students/${studentId}/grades`, {
+            year: entry.year,
+            semester: entry.semester,
+            subjects: validSubjects.map(s => ({ name: s.name.trim(), grade: Number(s.grade) })),
+          })
+        }
+      }
       navigate(`/students/${studentId}`)
     } catch (err) {
       setServerError((err as Error).message)
@@ -90,6 +102,15 @@ export default function StudentNewPage() {
           </div>
           <Input label="희망 대학 (선택)" value={form.targetUniv} onChange={handleChange('targetUniv')} placeholder="서울대학교" />
           <Input label="희망 학과 (선택)" value={form.targetMajor} onChange={handleChange('targetMajor')} placeholder="컴퓨터공학부" />
+
+          <hr className="border-outline-variant" />
+
+          <div>
+            <p className="text-sm font-semibold text-on-surface mb-4">
+              내신 입력 <span className="text-xs font-normal text-on-surface-variant">(선택)</span>
+            </p>
+            <GradesSection existingGrades={[]} value={gradesEntries} onChange={setGradesEntries} />
+          </div>
         </div>
 
         {serverError && <p className="text-sm text-error mt-4">{serverError}</p>}
