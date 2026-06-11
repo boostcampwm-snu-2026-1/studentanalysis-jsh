@@ -167,7 +167,7 @@ export default function StudentDetailPage() {
       return acc
     }, {})
     return (
-      <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8">
+      <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8 h-full">
         <h3 className="mb-6 text-sm font-semibold text-on-surface">내신 성적</h3>
         <div className="flex flex-col gap-6">
           {Object.entries(byYear).map(([year, entries]) => {
@@ -175,41 +175,76 @@ export default function StudentDetailPage() {
             return (
               <div key={year}>
                 <p className="mb-3 text-xs font-semibold text-on-surface-variant">{year}학년</p>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b border-outline-variant">
-                        <th className="pb-3 pr-4 text-left text-xs font-semibold text-on-surface-variant whitespace-nowrap">학기</th>
-                        {subjectCols.map(col => (
-                          <th key={col} className="pb-3 px-3 text-center text-xs font-semibold text-on-surface-variant whitespace-nowrap">{col}</th>
-                        ))}
-                        <th className="pb-3 pl-4 text-center text-xs font-semibold text-on-surface-variant whitespace-nowrap">평균</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {entries.map(g => {
-                        const gradeMap = Object.fromEntries(g.subjects.map(s => [s.name, s.grade]))
-                        return (
-                          <tr key={g.semester} className="border-b border-outline-variant last:border-0">
-                            <td className="py-3 pr-4 text-xs text-on-surface-variant whitespace-nowrap">{g.semester}학기</td>
-                            {subjectCols.map(col => (
-                              <td key={col} className="py-3 px-3 text-center text-sm text-on-surface">
-                                {gradeMap[col] != null ? `${gradeMap[col]}등급` : '—'}
-                              </td>
-                            ))}
-                            <td className="py-3 pl-4 text-center text-sm font-semibold text-on-surface">
-                              {g.avgGrade != null ? `${g.avgGrade}등급` : '—'}
+                <table className="w-full table-fixed text-sm">
+                  <thead>
+                    <tr className="border-b border-outline-variant">
+                      <th className="pb-3 pr-2 text-left text-xs font-semibold text-on-surface-variant w-12">학기</th>
+                      {subjectCols.map(col => (
+                        <th key={col} className="pb-3 px-1 text-center text-xs font-semibold text-on-surface-variant truncate">{col}</th>
+                      ))}
+                      <th className="pb-3 pl-1 text-center text-xs font-semibold text-on-surface-variant w-10">평균</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {entries.map(g => {
+                      const gradeMap = Object.fromEntries(g.subjects.map(s => [s.name, s.grade]))
+                      return (
+                        <tr key={g.semester} className="border-b border-outline-variant last:border-0">
+                          <td className="py-3 pr-2 text-xs text-on-surface-variant">{g.semester}학기</td>
+                          {subjectCols.map(col => (
+                            <td key={col} className="py-3 px-1 text-center text-sm text-on-surface">
+                              {gradeMap[col] != null ? gradeMap[col] : '—'}
                             </td>
-                          </tr>
-                        )
-                      })}
-                    </tbody>
-                  </table>
-                </div>
+                          ))}
+                          <td className="py-3 pl-1 text-center text-sm font-semibold text-on-surface">
+                            {g.avgGrade != null ? g.avgGrade : '—'}
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
               </div>
             )
           })}
         </div>
+      </div>
+    )
+  })()
+
+  const mockExamsTable = (() => {
+    const exams = student?.mockExams
+    if (!exams || exams.length === 0) return null
+    const sorted = [...exams].sort((a, b) => b.year - a.year || b.month - a.month)
+    const fmtSubject = (grade?: number, percentile?: number) => {
+      if (grade == null) return '—'
+      return percentile != null ? `${grade} (${percentile}%)` : `${grade}`
+    }
+    return (
+      <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8 h-full">
+        <h3 className="mb-6 text-sm font-semibold text-on-surface">모의고사 성적</h3>
+        <table className="w-full table-fixed text-sm">
+          <thead>
+            <tr className="border-b border-outline-variant">
+              <th className="pb-3 pr-2 text-left text-xs font-semibold text-on-surface-variant w-16">시험</th>
+              {['국어', '수학', '영어', '탐구1', '탐구2'].map(h => (
+                <th key={h} className="pb-3 px-1 text-center text-xs font-semibold text-on-surface-variant">{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {sorted.map(e => (
+              <tr key={`${e.year}-${e.month}`} className="border-b border-outline-variant last:border-0">
+                <td className="py-3 pr-2 text-xs text-on-surface-variant">{e.year}/{e.month}</td>
+                <td className="py-3 px-1 text-center text-sm text-on-surface">{fmtSubject(e.kor?.grade, e.kor?.percentile)}</td>
+                <td className="py-3 px-1 text-center text-sm text-on-surface">{fmtSubject(e.math?.grade, e.math?.percentile)}</td>
+                <td className="py-3 px-1 text-center text-sm text-on-surface">{e.eng?.grade != null ? e.eng.grade : '—'}</td>
+                <td className="py-3 px-1 text-center text-sm text-on-surface">{fmtSubject(e.exp1?.grade, e.exp1?.percentile)}</td>
+                <td className="py-3 px-1 text-center text-sm text-on-surface">{fmtSubject(e.exp2?.grade, e.exp2?.percentile)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     )
   })()
@@ -235,7 +270,12 @@ export default function StudentDetailPage() {
           ))}
         </dl>
       </div>
-      {gradesTable}
+      {(gradesTable || mockExamsTable) && (
+        <div className="grid grid-cols-2 gap-6 items-stretch">
+          {gradesTable}
+          {mockExamsTable}
+        </div>
+      )}
     </div>
   )
 
