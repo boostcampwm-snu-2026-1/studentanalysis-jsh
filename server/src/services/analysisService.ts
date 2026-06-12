@@ -10,7 +10,15 @@ import { AppError, PromptModule, PromptInput } from '../types'
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
-async function callOpenAI(
+const STEP_PROMPTS: Record<string, PromptModule> = {
+  competencyProfile: competencyProfilePrompt,
+  diagnosis: diagnosisPrompt,
+  activityA: activityAPrompt,
+  activityB: activityBPrompt,
+  narrative: narrativePrompt,
+}
+
+async function callLLM(
   promptModule: PromptModule,
   inputData: PromptInput,
   retries = 2
@@ -18,14 +26,15 @@ async function callOpenAI(
   try {
     const messages = promptModule.buildMessages(inputData)
     const res = await openai.chat.completions.create({
-      model: process.env.OPENAI_MODEL ?? 'gemini-2.0-flash',
+      model: process.env.OPENAI_MODEL ?? 'llama-3.3-70b-versatile',
       messages: messages as Parameters<typeof openai.chat.completions.create>[0]['messages'],
       max_tokens: promptModule.maxTokens,
     })
-    const content = res.choices[0].message.content
-    if (!content) throw { status: 500, message: '분석 결과가 비어있습니다.' } as AppError
+    const raw = res.choices[0].message.content
+    if (!raw) throw { status: 500, message: '분석 결과가 비어있습니다.' } as AppError
+    const content = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim()
     const parsed = JSON.parse(content) as Record<string, unknown>
-    const missing = promptModule.requiredKeys.filter((k) => !(k in parsed))
+    const missing = promptModule.requiredKeys.filter(k => !(k in parsed))
     if (missing.length > 0)
       throw { status: 500, message: `분석 결과에 필수 키가 누락됐습니다: ${missing.join(', ')}` } as AppError
     return parsed
@@ -33,7 +42,7 @@ async function callOpenAI(
     const error = err as { status?: number }
     if (retries > 0) {
       if (error.status === 429) await sleep(15000)
-      return callOpenAI(promptModule, inputData, retries - 1)
+      return callLLM(promptModule, inputData, retries - 1)
     }
     throw err
   }
@@ -49,18 +58,25 @@ async function getById(id: string) {
   return analysis
 }
 
-async function runAndSave(studentId: string, inputText: string) {
+async function initAnalysis(studentId: string, inputText: string) {
   const student = await studentRepository.findById(studentId)
   if (!student) throw { status: 404, message: '학생을 찾을 수 없습니다.' } as AppError
-
-  const inputData: PromptInput = { inputText, grades: student.grades, mockExams: student.mockExams }
-  const competencyProfile = await callOpenAI(competencyProfilePrompt, inputData)
-  const diagnosis = await callOpenAI(diagnosisPrompt, inputData)
-  const activityA = await callOpenAI(activityAPrompt, inputData)
-  const activityB = await callOpenAI(activityBPrompt, inputData)
-  const narrative = await callOpenAI(narrativePrompt, inputData)
-  const result = { competencyProfile, diagnosis, activityA, activityB, narrative }
-  return analysisRepository.create({ studentId, inputText, result })
+  return analysisRepository.init(studentId, inputText)
 }
 
-export { getByStudentId, getById, runAndSave }
+async function runStep(analysisId: string, step: string) {
+  const analysis = await analysisRepository.findById(analysisId)
+  if (!analysis) throw { status: 404, message: '분석 레코드를 찾을 수 없습니다.' } as AppError
+
+  const promptModule = STEP_PROMPTS[step]
+  if (!promptModule) throw { status: 400, message: `알 수 없는 분석 항목: ${step}` } as AppError
+
+  const student = await studentRepository.findById(analysis.studentId)
+  if (!student) throw { status: 404, message: '학생을 찾을 수 없습니다.' } as AppError
+
+  const inputData: PromptInput = { inputText: analysis.inputText, grades: student.grades, mockExams: student.mockExams }
+  const result = await callLLM(promptModule, inputData)
+  return analysisRepository.updateStep(analysisId, step, result)
+}
+
+export { getByStudentId, getById, initAnalysis, runStep }

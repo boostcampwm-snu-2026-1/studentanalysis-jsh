@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import Button from './Button'
-import AnalysisProgress, { ANALYSIS_STEPS } from './AnalysisProgress'
+import AnalysisProgress from './AnalysisProgress'
 import AnalysisResults, { AnalysisResult } from './AnalysisResults'
 import client from '../api/client'
 
@@ -42,21 +42,22 @@ export default function AnalysisTab({ studentId }: Props) {
     if (!analysisFetched) fetchAnalysis()
   }, [analysisFetched, fetchAnalysis])
 
-  useEffect(() => {
-    if (!analyzing) return
-    setActiveStep(0)
-    const interval = setInterval(() => {
-      setActiveStep(prev => (prev < ANALYSIS_STEPS.length - 1 ? prev + 1 : prev))
-    }, 3000)
-    return () => clearInterval(interval)
-  }, [analyzing])
+
+  const STEPS = ['competencyProfile', 'diagnosis', 'activityA', 'activityB', 'narrative'] as const
 
   const handleAnalyze = async () => {
     if (!inputText.trim()) return
     setAnalyzing(true)
     setAnalyzeError(null)
+    setActiveStep(0)
     try {
-      await client.post(`/api/students/${studentId}/analyze`, { inputText })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const initRes = await client.post(`/api/students/${studentId}/analysis/init`, { inputText }) as any
+      const analysisId = initRes.data._id as string
+      for (let i = 0; i < STEPS.length; i++) {
+        setActiveStep(i)
+        await client.post(`/api/analysis/${analysisId}/step`, { step: STEPS[i] })
+      }
       setShowInputArea(false)
       setInputText('')
       setSelectedIndex(0)
