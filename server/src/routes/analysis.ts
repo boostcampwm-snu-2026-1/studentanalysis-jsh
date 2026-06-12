@@ -13,16 +13,28 @@ router.get('/:studentId/analysis', async (req: Request, res: Response, next: Nex
   }
 })
 
-router.post('/:studentId/analyze', async (req: Request, res: Response, next: NextFunction) => {
+router.post('/:studentId/analysis/init', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { inputText } = req.body as { inputText?: string }
     if (!inputText) throw { status: 400, message: 'inputText는 필수입니다.' } as AppError
-    const analysis = await analysisService.runAndSave(req.params['studentId'] as string, inputText)
+    const analysis = await analysisService.initAnalysis(req.params['studentId'] as string, inputText)
     res.status(201).json({ data: analysis })
   } catch (err) {
     next(err)
   }
 })
+
+router.post('/:analysisId/step', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { step } = req.body as { step?: string }
+    if (!step) throw { status: 400, message: 'step은 필수입니다.' } as AppError
+    const analysis = await analysisService.runStep(req.params['analysisId'] as string, step)
+    res.json({ data: analysis })
+  } catch (err) {
+    next(err)
+  }
+})
+
 
 router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
   try {
