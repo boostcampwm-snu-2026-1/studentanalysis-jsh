@@ -122,10 +122,10 @@
   - [ ] 목표 대학 합격 가능성 분석 섹션
   - [ ] AI 입시 전략 팁 섹션
 
-- [ ] feature/13: 배포
-  - [ ] Vercel 프론트엔드 배포 설정 (GitHub 연동, 빌드 루트 설정)
-  - [ ] Render 백엔드 배포 설정 (Start Command, PORT 환경변수)
-  - [ ] MongoDB Atlas Network Access 설정 (0.0.0.0/0)
-  - [ ] 환경변수 전체 점검 (OPENAI_API_KEY, OPENAI_MODEL, MONGODB_URI 등)
-  - [ ] 환경변수 `OPENAI_MODEL`로 gpt-4o-mini ↔ gpt-4o 전환 확인
-  - [ ] 배포 확인
+- [x] feature/13: 배포
+  - [x] Vercel 프론트엔드 배포 설정 (GitHub 연동, 빌드 루트 설정)
+  - [x] Render 백엔드 배포 설정 (Start Command, PORT 환경변수)
+  - [x] MongoDB Atlas Network Access 설정 (0.0.0.0/0)
+  - [x] 환경변수 전체 점검 (OPENAI_API_KEY, OPENAI_MODEL, MONGODB_URI 등)
+  - [x] 환경변수 `OPENAI_MODEL`로 gpt-4o-mini ↔ gpt-4o 전환 확인
+  - [x] 배포 확인
