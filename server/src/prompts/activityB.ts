@@ -31,7 +31,7 @@ Definitions:
     },
     {
       role: 'user',
-      content: `[생활기록부]\n${inputText}${context ? `\n\n${context}` : ''}`,
+      content: `[진로활동특기사항]\n${inputText}${context ? `\n\n${context}` : ''}`,
     },
   ]
 }
