@@ -7,3 +7,4 @@ dist/
 dummy-*.json
 dummy-*.md
 server/seed.ts
+server/run-analysis.ts

@@ -71,13 +71,18 @@ export default function AnalysisTab({ studentId }: Props) {
 
   const inputArea = (
     <div className="flex flex-col gap-4">
-      <textarea
-        value={inputText}
-        onChange={e => setInputText(e.target.value)}
-        placeholder="생기부 원문을 붙여넣어 주세요"
-        rows={16}
-        className="w-full rounded border border-outline-variant bg-surface-container-lowest p-4 text-sm text-on-surface outline-none focus:border-primary resize-none"
-      />
+      <div className="flex flex-col gap-1">
+        <textarea
+          value={inputText}
+          onChange={e => setInputText(e.target.value.slice(0, 700))}
+          placeholder="진로활동특기사항을 입력해주세요"
+          rows={16}
+          className="w-full rounded border border-outline-variant bg-surface-container-lowest p-4 text-sm text-on-surface outline-none focus:border-primary resize-none"
+        />
+        <p className={`text-right text-xs ${inputText.length >= 700 ? 'text-error' : 'text-on-surface-variant'}`}>
+          {inputText.length} / 700
+        </p>
+      </div>
       {analyzeError && <p className="text-xs text-error">{analyzeError}</p>}
       <div className="flex justify-end">
         <Button onClick={handleAnalyze} disabled={analyzing || !inputText.trim()}>
