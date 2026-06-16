@@ -45,6 +45,8 @@ export interface PromptInput {
   inputText: string
   grades: IGrade[]
   mockExams: IMockExam[]
+  targetUniv?: string
+  targetMajor?: string
 }
 
 export interface PromptModule {

@@ -2,3 +2,9 @@ node_modules/
 dist/
 .env
 .env.local
+
+# 더미 데이터
+dummy-*.json
+dummy-*.md
+server/seed.ts
+server/run-analysis.ts

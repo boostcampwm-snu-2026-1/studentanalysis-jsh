@@ -24,7 +24,7 @@ export default function StudentFilterBar({
   }
 
   return (
-    <div className="flex items-center gap-10 mb-8 bg-surface-container rounded-lg px-8 py-5">
+    <div className="flex flex-wrap items-center gap-4 lg:gap-10 mb-8 bg-surface-container rounded-lg px-4 sm:px-8 py-5">
       <div className="flex items-center gap-2">
         <select
           value={selectedGrade ?? ''}
@@ -67,7 +67,7 @@ export default function StudentFilterBar({
         onChange={e => onNameChange(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="이름"
-        className={`${inputClass} flex-1`}
+        className={`${inputClass} flex-1 min-w-[160px]`}
       />
 
       <button

@@ -115,6 +115,13 @@ font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
 ### 진행 표시
 - 높이 4px, track: `primary-container`, filler: `primary`
 
+### 역량 프로필 카드 (CompetencyProfileCard)
+- 상단: 레이더 차트(좌 50%) + 핵심 지표 바(우 50%) 반반 분할
+- 하단: 2×2 근거 카드 그리드
+- 섹션 제목에 "Step N." 접두사 사용 금지 — 항목명만 표기
+- 레이더 차트 색상: `primary` stroke/fill, `outline-variant` grid, `on-surface-variant` 레이블
+- recharts 색상값은 `src/utils/tokens.ts`에서 참조 (하드코딩 금지)
+
 ---
 
 ## UI 스크린샷

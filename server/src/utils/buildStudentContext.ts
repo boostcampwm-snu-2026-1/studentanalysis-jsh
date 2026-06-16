@@ -1,7 +1,16 @@
 import { IGrade, IMockExam } from '../types'
 
-const buildStudentContext = (grades: IGrade[], mockExams: IMockExam[]): string => {
+const buildStudentContext = (
+  grades: IGrade[],
+  mockExams: IMockExam[],
+  targetUniv?: string,
+  targetMajor?: string
+): string => {
   const parts: string[] = []
+
+  if (targetUniv || targetMajor) {
+    parts.push(`[목표 진로]\n목표대학: ${targetUniv || '미입력'}, 목표계열: ${targetMajor || '미입력'}`)
+  }
 
   if (grades && grades.length > 0) {
     const lines = grades.map((g) =>
