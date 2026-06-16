@@ -45,7 +45,7 @@ export default function StudentDetailPage() {
   }))
 
   return (
-    <div className="max-w-content mx-auto px-16 py-12">
+    <div className="max-w-content mx-auto px-4 sm:px-8 lg:px-16 py-6 lg:py-12">
       <div className="mb-8">
         {loading ? (
           <div className="space-y-2">

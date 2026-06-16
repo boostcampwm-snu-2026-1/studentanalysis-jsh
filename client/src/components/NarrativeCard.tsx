@@ -16,7 +16,7 @@ export default function NarrativeCard({ data }: Props) {
     <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8 flex flex-col gap-8">
       <h3 className="text-base font-semibold text-on-surface">서사 설계</h3>
 
-      <div className="grid grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         <div className="flex flex-col gap-3">
           <p className="text-xs font-semibold text-on-surface">강점 서사</p>
           <p className="text-sm text-on-surface-variant leading-relaxed">{data.strengthNarrative}</p>
@@ -55,7 +55,7 @@ export default function NarrativeCard({ data }: Props) {
 
       <div className="flex flex-col gap-4">
         <p className="text-xs font-semibold text-on-surface">탐구 아이디어</p>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {data.ideas.map((idea, i) => (
             <div key={i} className="flex gap-4 rounded border border-outline-variant bg-surface p-5">
               <div className="w-6 h-6 rounded-full bg-primary-container text-on-surface flex items-center justify-center shrink-0 text-xs font-bold">

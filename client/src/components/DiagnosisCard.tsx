@@ -13,12 +13,12 @@ export default function DiagnosisCard({ data }: Props) {
   return (
     <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8">
       <h3 className="mb-6 text-base font-semibold text-on-surface">종합 진단</h3>
-      <div className="flex gap-10">
-        <div className="w-1/2">
+      <div className="flex flex-col lg:flex-row gap-10">
+        <div className="w-full lg:w-1/2">
           <p className="text-sm text-on-surface-variant leading-relaxed">{data.summary}</p>
         </div>
 
-        <div className="flex flex-col gap-6 w-1/2 pr-12">
+        <div className="flex flex-col gap-6 w-full lg:w-1/2 lg:pr-12">
           <div>
             <p className="mb-3 text-xs font-semibold text-on-surface">강점</p>
             <div className="flex flex-wrap gap-2">

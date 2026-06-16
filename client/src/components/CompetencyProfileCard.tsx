@@ -34,8 +34,8 @@ export default function CompetencyProfileCard({ data }: Props) {
       <h3 className="mb-6 text-base font-semibold text-on-surface">역량 프로필</h3>
 
       {/* 레이더 차트 + 핵심 지표 */}
-      <div className="flex gap-10 mb-8">
-        <div className="w-2/5">
+      <div className="flex flex-col lg:flex-row gap-10 mb-8">
+        <div className="w-full lg:w-2/5">
           <ResponsiveContainer width="100%" height={260}>
             <RadarChart data={chartData} margin={{ top: 20, right: 36, bottom: 20, left: 36 }}>
               <PolarGrid stroke={colors.outlineVariant} />
@@ -54,7 +54,7 @@ export default function CompetencyProfileCard({ data }: Props) {
           </ResponsiveContainer>
         </div>
 
-        <div className="flex flex-col gap-5 w-3/5 justify-center pr-12">
+        <div className="flex flex-col gap-5 w-full lg:w-3/5 justify-center lg:pr-12">
           {COMPETENCIES.map(({ scoreKey, label }) => (
             <div key={scoreKey}>
               <div className="flex justify-between mb-1.5">
@@ -73,7 +73,7 @@ export default function CompetencyProfileCard({ data }: Props) {
       </div>
 
       {/* 근거 카드 */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {COMPETENCIES.map(({ scoreKey, evidenceKey, label }) => (
           <div key={scoreKey} className="rounded border border-outline-variant p-5">
             <div className="flex items-start justify-between mb-2">

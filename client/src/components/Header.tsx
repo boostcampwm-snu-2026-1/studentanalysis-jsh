@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 export default function Header() {
   return (
-    <header className="flex items-center justify-between px-16 h-16 bg-surface-container-lowest border-b border-outline-variant">
+    <header className="flex items-center justify-between px-4 sm:px-8 lg:px-16 h-16 bg-surface-container-lowest border-b border-outline-variant">
       <Link to="/" className="text-primary font-semibold text-lg no-underline">
         StudentAnalysis
       </Link>

@@ -42,11 +42,11 @@ export default function AnalysisResults({ result }: Props) {
       {result.activityA ? (
         <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8">
           <h3 className="mb-6 text-base font-semibold text-on-surface">활동 추천 A</h3>
-          <div className="grid grid-cols-2 divide-x divide-outline-variant gap-0">
-            <div className="pr-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-outline-variant gap-8 lg:gap-0">
+            <div className="lg:pr-8">
               {result.activityA.stable && <ActivityItemCard label="안정형 활동" data={result.activityA.stable} />}
             </div>
-            <div className="pl-8">
+            <div className="pt-8 lg:pt-0 lg:pl-8">
               {result.activityA.intensive && <ActivityItemCard label="심화형 활동" data={result.activityA.intensive} />}
             </div>
           </div>
@@ -56,11 +56,11 @@ export default function AnalysisResults({ result }: Props) {
       {result.activityB ? (
         <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8">
           <h3 className="mb-6 text-base font-semibold text-on-surface">활동 추천 B</h3>
-          <div className="grid grid-cols-2 divide-x divide-outline-variant gap-0">
-            <div className="pr-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-outline-variant gap-8 lg:gap-0">
+            <div className="lg:pr-8">
               {result.activityB.differentiated && <ActivityItemCard label="차별화형 활동" data={result.activityB.differentiated} />}
             </div>
-            <div className="pl-8">
+            <div className="pt-8 lg:pt-0 lg:pl-8">
               {result.activityB.practical && <ActivityItemCard label="실천형 활동" data={result.activityB.practical} />}
             </div>
           </div>
