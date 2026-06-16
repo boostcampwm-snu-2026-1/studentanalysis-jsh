@@ -2,6 +2,8 @@
 
 > 교사가 학생 생기부를 입력하면 AI가 학생부종합전형 기준으로 다단계 분석을 제공하는 웹 서비스
 
+🔗 **배포 링크**: https://studentanalysis-moon-to-mars-projects.vercel.app/
+
 ---
 
 ## 서비스 소개
