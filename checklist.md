@@ -109,23 +109,10 @@
   - [x] 5단계 서사 설계 — 서사 전략 텍스트 + 탐구 아이디어 6개
   - [x] 분석 이력 목록 (최신순 셀렉트 or 드롭다운, 선택 시 결과 복원)
 
-- [ ] feature/11: 학생 상세 — 상담 기록 탭
-  - [ ] "이 분석으로 상담 시작" 버튼 → analysisId 연결된 상담 카드 초기화
-  - [ ] 상담 작성 폼 (일시·유형·상담내용·학생반응·다음목표·다음상담일)
-  - [ ] 유형 선택 드롭다운 (진로/학업/심리/기타)
-  - [ ] 독립 상담 직접 기록 (analysisId 없이 작성)
-  - [ ] 상담 이력 타임라인 (날짜순)
-  - [ ] 각 상담 카드에 연결된 분석 버전 표시 및 링크
-
-- [ ] feature/12: 학생 상세 — 대학 탐색 탭
-  - [ ] AI 추천 대학·학과 카드 목록 (매칭률 표시)
-  - [ ] 목표 대학 합격 가능성 분석 섹션
-  - [ ] AI 입시 전략 팁 섹션
-
-- [ ] feature/13: 배포
-  - [ ] Vercel 프론트엔드 배포 설정 (GitHub 연동, 빌드 루트 설정)
-  - [ ] Render 백엔드 배포 설정 (Start Command, PORT 환경변수)
-  - [ ] MongoDB Atlas Network Access 설정 (0.0.0.0/0)
-  - [ ] 환경변수 전체 점검 (OPENAI_API_KEY, OPENAI_MODEL, MONGODB_URI 등)
-  - [ ] 환경변수 `OPENAI_MODEL`로 gpt-4o-mini ↔ gpt-4o 전환 확인
-  - [ ] 배포 확인
+- [x] feature/13: 배포
+  - [x] Vercel 프론트엔드 배포 설정 (GitHub 연동, 빌드 루트 설정)
+  - [x] Render 백엔드 배포 설정 (Start Command, PORT 환경변수)
+  - [x] MongoDB Atlas Network Access 설정 (0.0.0.0/0)
+  - [x] 환경변수 전체 점검 (OPENAI_API_KEY, OPENAI_MODEL, MONGODB_URI 등)
+  - [x] 환경변수 `OPENAI_MODEL`로 gpt-4o-mini ↔ gpt-4o 전환 확인
+  - [x] 배포 확인

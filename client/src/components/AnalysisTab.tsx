@@ -121,24 +121,22 @@ export default function AnalysisTab({ studentId }: Props) {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-end gap-3">
-        {analysisHistory.length > 1 && (
-          <div className="relative">
-            <select
-              value={selectedIndex}
-              onChange={e => setSelectedIndex(Number(e.target.value))}
-              className="appearance-none rounded border border-primary bg-transparent pl-4 pr-10 py-4 text-sm font-semibold text-primary outline-none cursor-pointer"
-            >
-              {analysisHistory.map((a, i) => (
-                <option key={a._id} value={i}>
-                  {fmtDate(a.createdAt)}{i === 0 ? ' (최신)' : ''}
-                </option>
-              ))}
-            </select>
-            <svg className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" viewBox="0 0 16 16" fill="none">
-              <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </div>
-        )}
+        <div className="relative">
+          <select
+            value={selectedIndex}
+            onChange={e => setSelectedIndex(Number(e.target.value))}
+            className="appearance-none rounded border border-primary bg-transparent pl-4 pr-10 py-4 text-sm font-semibold text-primary outline-none cursor-pointer"
+          >
+            {analysisHistory.map((a, i) => (
+              <option key={a._id} value={i}>
+                {fmtDate(a.createdAt)}{i === 0 ? ' (최신)' : ''}
+              </option>
+            ))}
+          </select>
+          <svg className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" viewBox="0 0 16 16" fill="none">
+            <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
         <Button variant="secondary" onClick={() => setShowInputArea(v => !v)}>
           {showInputArea ? '취소' : '재분석'}
         </Button>

@@ -40,10 +40,10 @@ export default function StudentInfoCard({ student, onEditClick }: Props) {
     <div className="flex flex-col gap-6">
       <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8">
         <div className="mb-6 flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-on-surface">인적 사항</h3>
+          <h3 className="text-base font-semibold text-on-surface">인적 사항</h3>
           <Button variant="secondary" onClick={onEditClick}>수정하기</Button>
         </div>
-        <dl className="grid grid-cols-2 gap-x-8 gap-y-5">
+        <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5">
           {infoRows.map(({ label, value }) => (
             <div key={label}>
               <dt className="text-xs text-on-surface-variant">{label}</dt>
@@ -53,7 +53,7 @@ export default function StudentInfoCard({ student, onEditClick }: Props) {
         </dl>
       </div>
       {(student.grades?.length || student.mockExams?.length) ? (
-        <div className="grid grid-cols-2 gap-6 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
           {student.grades?.length ? <GradesTable grades={student.grades} /> : null}
           {student.mockExams?.length ? <MockExamsTable mockExams={student.mockExams} /> : null}
         </div>
