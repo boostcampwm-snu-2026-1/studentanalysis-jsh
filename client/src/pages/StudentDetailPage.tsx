@@ -4,14 +4,12 @@ import useStudent from '../hooks/useStudent'
 import BasicInfoTab from '../components/BasicInfoTab'
 import AnalysisTab from '../components/AnalysisTab'
 
-const TAB_KEYS = ['basic', 'analysis', 'consultation', 'university'] as const
+const TAB_KEYS = ['basic', 'analysis'] as const
 type TabKey = (typeof TAB_KEYS)[number]
 
 const TAB_LABELS: Record<TabKey, string> = {
   basic: '기본 정보',
   analysis: '생기부 분석',
-  consultation: '상담 기록',
-  university: '대학 탐색',
 }
 
 export default function StudentDetailPage() {
@@ -41,10 +39,8 @@ export default function StudentDetailPage() {
           error={error}
           refetch={refetch}
         />
-      ) : key === 'analysis' ? (
-        <AnalysisTab studentId={studentId!} />
       ) : (
-        <div className="text-sm text-on-surface-variant">{TAB_LABELS[key]} 준비 중</div>
+        <AnalysisTab studentId={studentId!} />
       ),
   }))
 
