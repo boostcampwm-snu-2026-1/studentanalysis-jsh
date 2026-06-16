@@ -14,7 +14,7 @@ export default function MockExamsTable({ mockExams }: Props) {
 
   return (
     <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8 h-full">
-      <h3 className="mb-6 text-sm font-semibold text-on-surface">모의고사 성적</h3>
+      <h3 className="mb-6 text-base font-semibold text-on-surface">모의고사 성적</h3>
       <table className="w-full table-fixed text-sm">
         <thead>
           <tr className="border-b border-outline-variant">

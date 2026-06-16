@@ -40,7 +40,7 @@ export default function StudentInfoCard({ student, onEditClick }: Props) {
     <div className="flex flex-col gap-6">
       <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8">
         <div className="mb-6 flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-on-surface">인적 사항</h3>
+          <h3 className="text-base font-semibold text-on-surface">인적 사항</h3>
           <Button variant="secondary" onClick={onEditClick}>수정하기</Button>
         </div>
         <dl className="grid grid-cols-2 gap-x-8 gap-y-5">

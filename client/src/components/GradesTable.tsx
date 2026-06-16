@@ -13,7 +13,7 @@ export default function GradesTable({ grades }: Props) {
 
   return (
     <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-8 h-full">
-      <h3 className="mb-6 text-sm font-semibold text-on-surface">내신 성적</h3>
+      <h3 className="mb-6 text-base font-semibold text-on-surface">내신 성적</h3>
       <div className="flex flex-col gap-6">
         {Object.entries(byYear).map(([year, entries]) => {
           const subjectCols = [...new Set(entries.flatMap(g => g.subjects.map(s => s.name)))]
